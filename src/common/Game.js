@@ -1,20 +1,13 @@
 import { GameEngine, BaseTypes, DynamicObject, SimplePhysicsEngine } from 'lance-gg';
 
-// /////////////////////////////////////////////////////////
-//
-// GAME OBJECTS
-//
-// /////////////////////////////////////////////////////////
-class YourGameObject extends DynamicObject {
+class Cursor extends DynamicObject {
 
     constructor(gameEngine, options, props) {
         super(gameEngine, options, props);
-    }
+        this.class = Cursor;
 
-    static get netScheme() {
-        return Object.assign({
-            health: { type: BaseTypes.TYPES.INT16 }
-        }, super.netScheme);
+        this.mouseX = null;
+        this.mouseY = null;
     }
 
     syncTo(other) {
@@ -48,7 +41,7 @@ export default class Game extends GameEngine {
     }
 
     registerClasses(serializer) {
-        serializer.registerClass(YourGameObject);
+        serializer.registerClass(Cursor);
     }
 
     gameLogic() {
@@ -65,9 +58,11 @@ export default class Game extends GameEngine {
     //
     // /////////////////////////////////////////////////////////
     serverSideInit() {
+        this.addObjectToWorld(new Cursor(this, null, { playerID: 0, position: new TwoVector(0, 0) }));
     }
 
     serverSidePlayerJoined(ev) {
+        let cursors = this.gameEngine.world.queryObjects({ instanceType: Cursor });
     }
 
     serverSidePlayerDisconnected(ev) {
@@ -83,5 +78,12 @@ export default class Game extends GameEngine {
     }
 
     clientSideDraw() {
+    }
+
+    updateMouseXY(e) {
+        e.preventDefault();
+        if (e.touches) e = e.touches.item(0);
+        this.mouseX = e.pageX;
+        this.mouseY = e.pageY;
     }
 }
