@@ -1,47 +1,43 @@
 {
-  "name": "lance-boilerplate",
-  "version": "4.0.0",
-  "engines": {
-    "node": ">=11.0.0"
+  "name": "my-remix-app",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "scripts": {
+    "build": "remix build",
+    "dev": "remix dev -c \"nodemon server.mjs\"",
+    "start": "remix-serve ./build/index.js",
+    "typecheck": "tsc"
   },
-  "description": "An HTML5 multiplayer game based on Lance",
-  "main": "src/main.js",
   "dependencies": {
-    "@babel/node": "^7.2.2",
-    "babel-loader": "^8.0.5",
-    "express": "^4.14.0",
-    "lance-gg": "^4.0.3",
-    "query-string": "^4.2.3",
-    "socket.io": "^2.5.0",
-    "webpack": "^3.8.1"
+    "@remix-run/css-bundle": "^2.3.0",
+    "@remix-run/express": "^2.3.0",
+    "@remix-run/node": "^2.3.0",
+    "@remix-run/react": "^2.3.0",
+    "@remix-run/serve": "^2.3.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "isbot": "^3.6.8",
+    "lucide-react": "^0.292.0",
+    "nodemon": "^3.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "socket.io": "^4.7.2",
+    "tailwind-merge": "^2.0.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.3.4",
-    "@babel/preset-env": "^7.3.4",
-    "eslint": "^3.16.1",
-    "eslint-config-google": "^0.7.1"
+    "@remix-run/dev": "^2.3.0",
+    "@remix-run/eslint-config": "^2.3.0",
+    "@types/react": "^18.2.20",
+    "@types/react-dom": "^18.2.7",
+    "eslint": "^8.38.0",
+    "tailwindcss": "^3.3.5",
+    "typescript": "^5.1.6"
   },
-  "scripts": {
-    "start": "node dist-server/main.js",
-    "start-debug": "node --inspect-brk dist-server/main.js",
-    "start-dev": "nodemon dist-server/main.js",
-    "postinstall": "webpack && babel src --source-maps --out-dir dist-server",
-    "build": "webpack && babel src --source-maps --out-dir dist-server",
-    "stats": "webpack --env production --profile --json > stats.json",
-    "dev": "webpack --watch"
-  },
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "keywords": [
-    "game",
-    "lance",
-    "lance-gg",
-    "multiplayer",
-    "websockets"
-  ],
-  "author": "Jane Doe",
-  "license": "Apache-2.0"
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }
