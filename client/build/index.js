@@ -120,7 +120,7 @@ __export(root_exports, {
 });
 
 // app/tailwind.css
-var tailwind_default = "/build/_assets/tailwind-HFOVOYMF.css";
+var tailwind_default = "/build/_assets/tailwind-OZRVGJO2.css";
 
 // app/root.tsx
 import {
@@ -312,7 +312,8 @@ function Index() {
 // app/routes/room.tsx
 var room_exports = {};
 __export(room_exports, {
-  default: () => room_default
+  Players: () => Players,
+  default: () => Room
 });
 import * as io2 from "socket.io-client";
 import { useEffect as useEffect2, useState as useState2 } from "react";
@@ -404,8 +405,31 @@ Input.displayName = "Input";
 
 // app/routes/room.tsx
 import { jsxDEV as jsxDEV6 } from "react/jsx-dev-runtime";
-var socket2 = io2.connect("http://localhost:3001");
-function App2() {
+var color = ["red", "blue", "green", "purple"], socket2 = io2.connect("http://localhost:3001");
+function Players() {
+  let [users, setUsers] = useState2([]);
+  return socket2.on("user_joined", (data) => {
+    console.log(data), setUsers([...users, data]);
+  }), /* @__PURE__ */ jsxDEV6("div", { className: "flex gap-4", children: users.map((user, key) => /* @__PURE__ */ jsxDEV6(
+    "div",
+    {
+      className: `w-24 h-24 rounded-full bg-${color[key]}-600`
+    },
+    key,
+    !1,
+    {
+      fileName: "app/routes/room.tsx",
+      lineNumber: 22,
+      columnNumber: 11
+    },
+    this
+  )) }, void 0, !1, {
+    fileName: "app/routes/room.tsx",
+    lineNumber: 19,
+    columnNumber: 5
+  }, this);
+}
+function Room() {
   let [message, setMessage] = useState2(""), [room, setRoom] = useState2(""), [messageReceived, setMessageReceived] = useState2(""), joinRoom = (room_id) => {
     setRoom(room_id), socket2.emit("join_room", room_id);
   }, sendMessage = () => {
@@ -415,37 +439,47 @@ function App2() {
     socket2.on("receive_message", (data) => {
       setMessageReceived(data.message);
     });
-  }, [socket2]), /* @__PURE__ */ jsxDEV6("div", { children: [
-    /* @__PURE__ */ jsxDEV6(Button, { onClick: () => joinRoom("11"), children: " Join Room" }, void 0, !1, {
+  }, [socket2]), /* @__PURE__ */ jsxDEV6("div", { className: "p-4 flex gap-4", children: [
+    /* @__PURE__ */ jsxDEV6("div", { className: "flex gap-4", children: [
+      /* @__PURE__ */ jsxDEV6(Button, { onClick: () => joinRoom("11"), children: " Join Room" }, void 0, !1, {
+        fileName: "app/routes/room.tsx",
+        lineNumber: 56,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV6(Input, { onChange: (e) => setMessage(e.target.value) }, void 0, !1, {
+        fileName: "app/routes/room.tsx",
+        lineNumber: 57,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV6(Button, { onClick: sendMessage, children: " Send mock message" }, void 0, !1, {
+        fileName: "app/routes/room.tsx",
+        lineNumber: 58,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV6("h3", { children: messageReceived }, void 0, !1, {
+        fileName: "app/routes/room.tsx",
+        lineNumber: 59,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, !0, {
       fileName: "app/routes/room.tsx",
-      lineNumber: 32,
+      lineNumber: 55,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ jsxDEV6(Input, { onChange: (e) => setMessage(e.target.value) }, void 0, !1, {
+    /* @__PURE__ */ jsxDEV6(Players, {}, void 0, !1, {
       fileName: "app/routes/room.tsx",
-      lineNumber: 33,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV6(Button, { onClick: sendMessage, children: " Send mock message" }, void 0, !1, {
-      fileName: "app/routes/room.tsx",
-      lineNumber: 34,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV6("h3", { children: messageReceived }, void 0, !1, {
-      fileName: "app/routes/room.tsx",
-      lineNumber: 35,
+      lineNumber: 61,
       columnNumber: 7
     }, this)
   ] }, void 0, !0, {
     fileName: "app/routes/room.tsx",
-    lineNumber: 31,
+    lineNumber: 54,
     columnNumber: 5
   }, this);
 }
-var room_default = App2;
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-D55QUUUD.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-XXIY3PRO.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-THDIDIAX.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-EWJC6Y56.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-AZXYXKKL.js", imports: ["/build/_shared/chunk-KRYXFZVY.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/room": { id: "routes/room", parentId: "root", path: "room", index: void 0, caseSensitive: void 0, module: "/build/routes/room-Y7UNHGGL.js", imports: ["/build/_shared/chunk-KRYXFZVY.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "d29de321", hmr: { runtime: "/build/_shared/chunk-THDIDIAX.js", timestamp: 1700378689157 }, url: "/build/manifest-D29DE321.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-NEWLRCSP.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-CQEVPDCO.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-U6TTRABJ.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-M5BC6UYK.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-2TGH32QP.js", imports: ["/build/_shared/chunk-KRYXFZVY.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/room": { id: "routes/room", parentId: "root", path: "room", index: void 0, caseSensitive: void 0, module: "/build/routes/room-Q3CDXJUW.js", imports: ["/build/_shared/chunk-KRYXFZVY.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "c8814331", hmr: { runtime: "/build/_shared/chunk-U6TTRABJ.js", timestamp: 1700382751728 }, url: "/build/manifest-C8814331.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "development", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
