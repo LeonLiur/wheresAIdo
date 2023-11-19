@@ -202,44 +202,67 @@ __export(index_exports, {
   default: () => Index,
   meta: () => meta
 });
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import * as io from "socket.io-client";
 
 // public/waldo.json
 var waldo_default = {
   coords: [
     {
-      src: "/Users/yiyixu/Documents/Personal/wheresAIdo/client/public/assets/1.jpg",
+      src: "client/public/assets/1.jpg",
       x: "35.506003430531734",
       y: "43.52469996558499"
     },
-    {}
+    {
+      src: "client/public/assets/2.jpg",
+      x: "0",
+      y: "0"
+    },
+    {
+      src: "client/public/assets/3.jpg",
+      x: "0",
+      y: "0"
+    },
+    {
+      src: "client/public/assets/4.jpg",
+      x: "0",
+      y: "0"
+    },
+    {
+      src: "client/public/assets/5.jpg",
+      x: "0",
+      y: "0"
+    }
   ]
 };
 
 // app/routes/_index.tsx
 import { jsxDEV as jsxDEV3 } from "react/jsx-dev-runtime";
-var threshold = 1.5, meta = () => [
+var threshold = 1.5, socket = io.connect("http://localhost:3001/"), meta = () => [
   { title: "New Remix App" },
   { name: "description", content: "Welcome to Remix!" }
 ];
 function Index() {
-  let [msg, setMsg] = useState(), [found, setFound] = useState(!1), sendMessage = () => {
-    console.log(1);
-  };
+  let [found, setFound] = useState(!1);
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      alert(data.message);
+    });
+  }, [socket]);
   function handleClick(event) {
     let img = new Image();
-    img.src = "/assets/1.jpg", img.onload = () => {
+    img.src = waldo_default.coords[0].src, img.onload = () => {
       let renderedWidth = Math.min(window.innerWidth, img.width), renderedHeight = img.height * (window.innerWidth / img.width), x = event.clientX / renderedWidth * 100, y = event.clientY / renderedHeight * 100, waldo_x = waldo_default.coords[0].x, waldo_y = waldo_default.coords[0].y;
-      Math.abs(x - Number(waldo_x)) < threshold && Math.abs(y - Number(waldo_y)) < threshold ? console.log("You found Waldo!") : console.log("Try again!");
+      found || (Math.abs(x - Number(waldo_x)) < threshold && Math.abs(y - Number(waldo_y)) < threshold ? (console.log("You found Waldo!"), socket.emit("send_message", { message: "found waldo" }), setFound(!1)) : console.log("Try again!"));
     };
   }
-  return /* @__PURE__ */ jsxDEV3("div", { children: /* @__PURE__ */ jsxDEV3("img", { src: "/assets/1.jpg", alt: "Waldo", onClick: handleClick }, void 0, !1, {
+  return /* @__PURE__ */ jsxDEV3("div", { children: /* @__PURE__ */ jsxDEV3("img", { src: waldo_default.coords[0].src, alt: "Waldo", onClick: handleClick }, void 0, !1, {
     fileName: "app/routes/_index.tsx",
-    lineNumber: 66,
+    lineNumber: 65,
     columnNumber: 7
   }, this) }, void 0, !1, {
     fileName: "app/routes/_index.tsx",
-    lineNumber: 65,
+    lineNumber: 64,
     columnNumber: 5
   }, this);
 }
@@ -249,7 +272,7 @@ var room_exports = {};
 __export(room_exports, {
   default: () => room_default
 });
-import * as io from "socket.io-client";
+import * as io2 from "socket.io-client";
 import { useEffect as useEffect2, useState as useState2 } from "react";
 
 // app/@/components/ui/button.tsx
@@ -339,18 +362,18 @@ Input.displayName = "Input";
 
 // app/routes/room.tsx
 import { jsxDEV as jsxDEV6 } from "react/jsx-dev-runtime";
-var socket = io.connect("http://localhost:3001");
+var socket2 = io2.connect("http://localhost:3001");
 function App2() {
   let [message, setMessage] = useState2(""), [room, setRoom] = useState2(""), [messageReceived, setMessageReceived] = useState2(""), joinRoom = (room_id) => {
-    setRoom(room_id), socket.emit("join_room", room_id);
+    setRoom(room_id), socket2.emit("join_room", room_id);
   }, sendMessage = () => {
-    socket.emit("send_message", { message, room });
+    socket2.emit("send_message", { message, room });
   };
   return useEffect2(() => {
-    socket.on("receive_message", (data) => {
+    socket2.on("receive_message", (data) => {
       setMessageReceived(data.message);
     });
-  }, [socket]), /* @__PURE__ */ jsxDEV6("div", { children: [
+  }, [socket2]), /* @__PURE__ */ jsxDEV6("div", { children: [
     /* @__PURE__ */ jsxDEV6(Button, { onClick: () => joinRoom("11"), children: " Join Room" }, void 0, !1, {
       fileName: "app/routes/room.tsx",
       lineNumber: 32,
@@ -380,7 +403,7 @@ function App2() {
 var room_default = App2;
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-D55QUUUD.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-XXIY3PRO.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-THDIDIAX.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-3NXKFAND.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-IMWYBJJP.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/room": { id: "routes/room", parentId: "root", path: "room", index: void 0, caseSensitive: void 0, module: "/build/routes/room-LRQOJ45O.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "9f985b17", hmr: { runtime: "/build/_shared/chunk-THDIDIAX.js", timestamp: 1700370215345 }, url: "/build/manifest-9F985B17.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-D55QUUUD.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-XXIY3PRO.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-THDIDIAX.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-3NXKFAND.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-BIR7LTYN.js", imports: ["/build/_shared/chunk-KRYXFZVY.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/room": { id: "routes/room", parentId: "root", path: "room", index: void 0, caseSensitive: void 0, module: "/build/routes/room-Y7UNHGGL.js", imports: ["/build/_shared/chunk-KRYXFZVY.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "fd77ec78", hmr: { runtime: "/build/_shared/chunk-THDIDIAX.js", timestamp: 1700370274228 }, url: "/build/manifest-FD77EC78.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "development", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
