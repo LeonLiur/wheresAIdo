@@ -35,10 +35,12 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   // console.log(`User Connected: ${socket.id}`);
   
-  socket.on("send_message", (data) => {
-    // socket.to(data.room).emit("receive_message", data)
-    socket.to("11").emit("receive_message", data)
-  });
+  socket.on("start_game", room => {
+    console.log("start")
+    socket.to(room).emit("start_game", room)
+  })
+
+
 
   socket.on("join_room", (message) => {
     console.log(message)
@@ -58,10 +60,17 @@ io.on("connection", (socket) => {
     })   
   })
 
+  socket.on("display_image", async(room) => {
+    let prompts = await getPrompts(room)
+    socket.to(room.toString()).emit("images", {prompts})
+  })
+
 });
 
-app.get('/generate_waldo', async (req, res) => {
-  console.log('received fetch')
+async function generateImg(prompt){
+  let input = " A scene with a " +
+      prompt +
+      "background in a 'Where's Waldo' style with many small cartoonish characters in the scene but WITHOUT having a Waldo character anywhere in the scene"
   const dalleRes = await fetch('https://api.openai.com/v1/images/generations', {
     method: 'POST',
     headers: {
@@ -70,7 +79,7 @@ app.get('/generate_waldo', async (req, res) => {
     },
     body: JSON.stringify({
       model: 'dall-e-2',
-      prompt: `${req.query.prompt}`,
+      prompt: `${input}`,
       n: 1,
       size: image_size
     })
@@ -78,8 +87,13 @@ app.get('/generate_waldo', async (req, res) => {
 
   const URL = dalleRes.data[0].url
   const size = image_size.split('x')
+  return ({ img_url: URL, img_width: size[0], img_height: size[1] })
+}
 
-  res.status(200).send({ img_url: URL, img_width: size[0], img_height: size[1] })
+app.get('/generate_waldo', async (req, res) => {
+  console.log('received fetch')
+  let ret = await generateImg(req.body.prompt)
+  res.status(200).send(ret)
 })
 
 server.listen(3001, () => {
@@ -103,6 +117,7 @@ app.post('/createRoom', (req, res) => {
 
     let roomRef = db.ref(`rooms/${roomNumber}`)
     roomRef.set({
+      prompts: [],
       roomNumber: roomNumber.toString(),
       host: req.body.uid,
       players: {
@@ -110,7 +125,7 @@ app.post('/createRoom', (req, res) => {
           name: req.body.name,
           score: 0
         }
-      }
+      },
     })
 
     roomNum.update([...roomsInUse, roomNumber])
@@ -138,24 +153,34 @@ app.post("/joinRoom", async(req, res) => {
       }
     })
 
-    // let ids = Object.keys(users)
-    // let values = Object.values(users)
-    // let ret = []
-    // for (let i = 0; i < ids.length; i++){
-    //   ret.push({
-    //     id: ids[i],
-    //     name: values[i].name,
-    //     score: values[i].score
-    //   })
-    // }
-
     res.send(JSON.stringify(users))
 
 
   }
   else{
 
-    res.status(200).send("No room number")
+    res.status(400).send("No room number")
   }
 
 })
+
+app.post('/addPrompt', async(req, res) => {
+  let roomRef = db.ref(`rooms/${parseInt(req.body.roomNum)}/prompts`)
+
+  let prompts = (await roomRef.get()).val()
+  let ret = await generateImg(req.body.prompt)
+  if(prompts == null){
+    await roomRef.set([ret])
+  }
+  else{
+    prompts.push(ret)
+    await roomRef.set(prompts)
+  }
+  res.status(200)
+})
+
+async function getPrompts(room){
+  let roomRef = db.ref(`rooms/${room}/prompts`)
+  let prompts = (await roomRef.get()).val()
+  return prompts
+}
