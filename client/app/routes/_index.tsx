@@ -6,6 +6,7 @@ import * as io from "socket.io-client";
 import waldo from "../../public/waldo.json";
 
 const threshold = 1.5;
+const pic_id = 1;
 
 const socket = io.connect("http://localhost:3001/");
 
@@ -40,8 +41,8 @@ export default function Index() {
 
       // console.log(x, y);
 
-      const waldo_x = waldo.coords[0].x;
-      const waldo_y = waldo.coords[0].y;
+      const waldo_x = waldo.coords[pic_id].x;
+      const waldo_y = waldo.coords[pic_id].y;
 
       // console.log(waldo_x, waldo_y);
 
@@ -62,7 +63,7 @@ export default function Index() {
 
   return (
     <div>
-      <img src={waldo.coords[0].src} alt="Waldo" onClick={handleClick} />
+      <img src={waldo.coords[pic_id].src} alt="Waldo" onClick={handleClick} />
     </div>
   );
 }

@@ -5,3 +5,4 @@ client/build/
 **/public/build/
 build/
 .env
+.DS_Store
