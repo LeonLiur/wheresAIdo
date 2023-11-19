@@ -6,6 +6,7 @@ import * as io from "socket.io-client";
 import waldo from "../../public/waldo.json";
 import new_waldo from "../../public/assets/new_waldo.png";
 import config from "../../public/config.json";
+import { getAuth, } from "firebase/auth";
 
 const threshold = 1.5;
 const pic_id = 1;
@@ -21,6 +22,27 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   const [found, setFound] = useState(false);
+  const [time, setTime] = useState(59)
+  const [intervalID, setIntervalID] = useState<any>(null)
+  const auth = getAuth();
+
+  useEffect(() => {
+    const timerInterval = setInterval(() => setTime(prevTime => prevTime - 1), 1000)
+    setIntervalID(timerInterval)
+
+    return () => {
+      setTime(59)
+      clearInterval(timerInterval)
+    };
+  }, [])
+
+  useEffect(() => {
+    if(time <= 0){
+      clearInterval(intervalID)
+      socket.emit("add_points", { time_left: time })
+      setTime(59)
+    }
+  }, [time])
 
   useEffect(() => {
     socket.on("receive_message", (data: any) => {
@@ -56,6 +78,9 @@ export default function Index() {
           console.log("You found Waldo!");
           socket.emit("send_message", { message: "found waldo" });
           setFound(false);
+          clearInterval(intervalID)
+          socket.emit("add_points", { time_left: time, uid: auth.currentUser?.uid })
+          setTime(59)
         } else {
           console.log("Try again!");
         }
@@ -65,6 +90,7 @@ export default function Index() {
 
   return (
     <div>
+      <h3>00:{time}</h3>
       <img src={waldo.coords[pic_id].src} alt="Waldo" onClick={handleClick} />
       {/* put the image for waldo here */}
       <img
