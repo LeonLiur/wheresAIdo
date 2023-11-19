@@ -120,7 +120,7 @@ __export(root_exports, {
 });
 
 // app/tailwind.css
-var tailwind_default = "/build/_assets/tailwind-HFOVOYMF.css";
+var tailwind_default = "/build/_assets/tailwind-N6WNVEBL.css";
 
 // app/root.tsx
 import {
@@ -202,120 +202,6 @@ __export(index_exports, {
   default: () => Index,
   meta: () => meta
 });
-import { useEffect, useState } from "react";
-import * as io from "socket.io-client";
-
-// public/waldo.json
-var waldo_default = {
-  coords: [
-    {
-      src: "assets/1.jpg",
-      x: "35.506003430531734",
-      y: "43.52469996558499"
-    },
-    {
-      src: "assets/2.jpg",
-      x: "7.5126903553299496",
-      y: "69.47246263902584"
-    },
-    {
-      src: "assets/3.jpg",
-      x: "69.13705583756345",
-      y: "39.223687040215545"
-    },
-    {
-      src: "assets/4.jpg",
-      x: "73.19796954314721",
-      y: "23.93309717708067"
-    },
-    {
-      src: "assets/6.jpg",
-      x: "84.8730964467005",
-      y: "35.06863544697237"
-    }
-  ]
-};
-
-// public/assets/new_waldo.png
-var new_waldo_default = "/build/_assets/new_waldo-4PIDWJWO.png";
-
-// app/routes/_index.tsx
-import { jsxDEV as jsxDEV3 } from "react/jsx-dev-runtime";
-var threshold = 1.5, pic_id = 1, socket = io.connect("http://localhost:3001/"), meta = () => [
-  { title: "New Remix App" },
-  { name: "description", content: "Welcome to Remix!" }
-];
-function Index() {
-  let [found, setFound] = useState(!1);
-  useEffect(() => {
-    socket.on("receive_message", (data) => {
-      alert(data.message);
-    });
-  }, [socket]);
-  function handleClick(event) {
-    let img = new Image();
-    img.src = waldo_default.coords[0].src, img.onload = () => {
-      let renderedWidth = Math.min(window.innerWidth, img.width), renderedHeight = img.height * (window.innerWidth / img.width), x = event.clientX / renderedWidth * 100, y = event.clientY / renderedHeight * 100, waldo_x = waldo_default.coords[pic_id].x, waldo_y = waldo_default.coords[pic_id].y;
-      found || (Math.abs(x - Number(waldo_x)) < threshold && Math.abs(y - Number(waldo_y)) < threshold ? (console.log("You found Waldo!"), socket.emit("send_message", { message: "found waldo" }), setFound(!1)) : console.log("Try again!"));
-    };
-  }
-  return /* @__PURE__ */ jsxDEV3("div", { children: [
-    /* @__PURE__ */ jsxDEV3(
-      "img",
-      {
-        src: waldo_default.coords[pic_id].src,
-        alt: "Waldo",
-        onClick: handleClick
-      },
-      void 0,
-      !1,
-      {
-        fileName: "app/routes/_index.tsx",
-        lineNumber: 69,
-        columnNumber: 7
-      },
-      this
-    ),
-    /* @__PURE__ */ jsxDEV3(
-      "img",
-      {
-        src: new_waldo_default,
-        alt: "new_waldo",
-        style: {
-          position: "absolute",
-          top: waldo_default.coords[pic_id].y / 1,
-          left: waldo_default.coords[pic_id].x,
-          width: "10%",
-          // Adjust the size as needed
-          height: "10%",
-          // Adjust the size as needed
-          pointerEvents: "none"
-          // Allow clicks to pass through the overlay
-        }
-      },
-      void 0,
-      !1,
-      {
-        fileName: "app/routes/_index.tsx",
-        lineNumber: 75,
-        columnNumber: 7
-      },
-      this
-    )
-  ] }, void 0, !0, {
-    fileName: "app/routes/_index.tsx",
-    lineNumber: 68,
-    columnNumber: 5
-  }, this);
-}
-
-// app/routes/room.tsx
-var room_exports = {};
-__export(room_exports, {
-  default: () => room_default
-});
-import * as io2 from "socket.io-client";
-import { useEffect as useEffect2, useState as useState2 } from "react";
 
 // app/@/components/ui/button.tsx
 import * as React from "react";
@@ -330,7 +216,7 @@ function cn(...inputs) {
 }
 
 // app/@/components/ui/button.tsx
-import { jsxDEV as jsxDEV4 } from "react/jsx-dev-runtime";
+import { jsxDEV as jsxDEV3 } from "react/jsx-dev-runtime";
 var buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300",
   {
@@ -356,7 +242,7 @@ var buttonVariants = cva(
     }
   }
 ), Button = React.forwardRef(
-  ({ className, variant, size, asChild = !1, ...props }, ref) => /* @__PURE__ */ jsxDEV4(
+  ({ className, variant, size, asChild = !1, ...props }, ref) => /* @__PURE__ */ jsxDEV3(
     asChild ? Slot : "button",
     {
       className: cn(buttonVariants({ variant, size, className })),
@@ -377,9 +263,9 @@ Button.displayName = "Button";
 
 // app/@/components/ui/input.tsx
 import * as React2 from "react";
-import { jsxDEV as jsxDEV5 } from "react/jsx-dev-runtime";
+import { jsxDEV as jsxDEV4 } from "react/jsx-dev-runtime";
 var Input = React2.forwardRef(
-  ({ className, type, ...props }, ref) => /* @__PURE__ */ jsxDEV5(
+  ({ className, type, ...props }, ref) => /* @__PURE__ */ jsxDEV4(
     "input",
     {
       type,
@@ -402,50 +288,103 @@ var Input = React2.forwardRef(
 );
 Input.displayName = "Input";
 
-// app/routes/room.tsx
-import { jsxDEV as jsxDEV6 } from "react/jsx-dev-runtime";
-var socket2 = io2.connect("http://localhost:3001");
-function App2() {
-  let [message, setMessage] = useState2(""), [room, setRoom] = useState2(""), [messageReceived, setMessageReceived] = useState2(""), joinRoom = (room_id) => {
-    setRoom(room_id), socket2.emit("join_room", room_id);
-  }, sendMessage = () => {
-    socket2.emit("send_message", { message, room });
-  };
-  return useEffect2(() => {
-    socket2.on("receive_message", (data) => {
-      setMessageReceived(data.message);
+// app/routes/_index.tsx
+import { useEffect, useState } from "react";
+import * as io from "socket.io-client";
+import { jsxDEV as jsxDEV5 } from "react/jsx-dev-runtime";
+var socket = io.connect("http://localhost:3001/"), meta = () => [
+  { title: "New Remix App" },
+  { name: "description", content: "Welcome to Remix!" }
+];
+function Index() {
+  let [msg, setMsg] = useState(), [found, setFound] = useState(!1);
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      alert(data.message);
     });
-  }, [socket2]), /* @__PURE__ */ jsxDEV6("div", { children: [
-    /* @__PURE__ */ jsxDEV6(Button, { onClick: () => joinRoom("11"), children: " Join Room" }, void 0, !1, {
-      fileName: "app/routes/room.tsx",
-      lineNumber: 32,
+  }, [socket]);
+  let sendMessage = () => {
+    console.log(1), socket.emit("send_message", { message: msg });
+  };
+  function handleClick(event) {
+    let x = event.clientX, y = event.clientY;
+    console.log(x, y), !found && x < 553 + 15 && x > 553 - 15 && y < 223 + 15 && y > 233 - 15 && (setFound(!0), socket.emit("send_message", { message: "found waldo" }));
+  }
+  return /* @__PURE__ */ jsxDEV5("div", { children: [
+    /* @__PURE__ */ jsxDEV5("h1", { className: "text-3xl font-bold underline", children: "Hello world!" }, void 0, !1, {
+      fileName: "app/routes/_index.tsx",
+      lineNumber: 50,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ jsxDEV6(Input, { onChange: (e) => setMessage(e.target.value) }, void 0, !1, {
-      fileName: "app/routes/room.tsx",
-      lineNumber: 33,
+    /* @__PURE__ */ jsxDEV5("img", { src: "/assets/Waldo.jpeg", alt: "Waldo", onClick: handleClick }, void 0, !1, {
+      fileName: "app/routes/_index.tsx",
+      lineNumber: 51,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ jsxDEV6(Button, { onClick: sendMessage, children: " Send mock message" }, void 0, !1, {
+    /* @__PURE__ */ jsxDEV5(
+      Input,
+      {
+        type: "email",
+        placeholder: "Email",
+        onChange: (e) => setMsg(e.target.value)
+      },
+      void 0,
+      !1,
+      {
+        fileName: "app/routes/_index.tsx",
+        lineNumber: 52,
+        columnNumber: 7
+      },
+      this
+    ),
+    /* @__PURE__ */ jsxDEV5(Button, { onClick: sendMessage, children: "Sumbit" }, void 0, !1, {
+      fileName: "app/routes/_index.tsx",
+      lineNumber: 57,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, !0, {
+    fileName: "app/routes/_index.tsx",
+    lineNumber: 49,
+    columnNumber: 5
+  }, this);
+}
+
+// app/routes/room.tsx
+var room_exports = {};
+__export(room_exports, {
+  default: () => Room
+});
+import * as io2 from "socket.io-client";
+import { jsxDEV as jsxDEV6 } from "react/jsx-dev-runtime";
+var socket2 = io2.connect("http://localhost:3001/");
+async function getRoom() {
+  let result = await fetch("http://localhost:3001/getRoom");
+  console.log(await result.json());
+}
+function Room() {
+  let sendMessage = () => {
+    console.log(1), socket2.emit("send_message", {});
+  };
+  return /* @__PURE__ */ jsxDEV6("div", { className: "p-4 flex gap-4", children: [
+    /* @__PURE__ */ jsxDEV6(Button, { children: "Join Room" }, void 0, !1, {
       fileName: "app/routes/room.tsx",
-      lineNumber: 34,
+      lineNumber: 19,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ jsxDEV6("h3", { children: messageReceived }, void 0, !1, {
+    /* @__PURE__ */ jsxDEV6(Button, { onClick: getRoom, children: "Start Room" }, void 0, !1, {
       fileName: "app/routes/room.tsx",
-      lineNumber: 35,
+      lineNumber: 20,
       columnNumber: 7
     }, this)
   ] }, void 0, !0, {
     fileName: "app/routes/room.tsx",
-    lineNumber: 31,
+    lineNumber: 18,
     columnNumber: 5
   }, this);
 }
-var room_default = App2;
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-D55QUUUD.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-XXIY3PRO.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-THDIDIAX.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-EWJC6Y56.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-AZXYXKKL.js", imports: ["/build/_shared/chunk-KRYXFZVY.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/room": { id: "routes/room", parentId: "root", path: "room", index: void 0, caseSensitive: void 0, module: "/build/routes/room-Y7UNHGGL.js", imports: ["/build/_shared/chunk-KRYXFZVY.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "d29de321", hmr: { runtime: "/build/_shared/chunk-THDIDIAX.js", timestamp: 1700378689157 }, url: "/build/manifest-D29DE321.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-D55QUUUD.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-XXIY3PRO.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-THDIDIAX.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-NU2YUOLV.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-NMXQYSKY.js", imports: ["/build/_shared/chunk-4B7OYGOX.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/room": { id: "routes/room", parentId: "root", path: "room", index: void 0, caseSensitive: void 0, module: "/build/routes/room-MB3KVT5G.js", imports: ["/build/_shared/chunk-4B7OYGOX.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "c4a5e722", hmr: { runtime: "/build/_shared/chunk-THDIDIAX.js", timestamp: 1700362855361 }, url: "/build/manifest-C4A5E722.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "development", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
