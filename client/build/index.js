@@ -120,7 +120,7 @@ __export(root_exports, {
 });
 
 // app/tailwind.css
-var tailwind_default = "/build/_assets/tailwind-K3IZL4AS.css";
+var tailwind_default = "/build/_assets/tailwind-N6WNVEBL.css";
 
 // app/root.tsx
 import {
@@ -297,7 +297,7 @@ var socket = io.connect("http://localhost:3001/"), meta = () => [
   { name: "description", content: "Welcome to Remix!" }
 ];
 function Index() {
-  let [msg, setMsg] = useState();
+  let [msg, setMsg] = useState(), [found, setFound] = useState(!1);
   useEffect(() => {
     socket.on("receive_message", (data) => {
       alert(data.message);
@@ -308,17 +308,17 @@ function Index() {
   };
   function handleClick(event) {
     let x = event.clientX, y = event.clientY;
-    console.log(x, y);
+    console.log(x, y), !found && x < 553 + 15 && x > 553 - 15 && y < 223 + 15 && y > 233 - 15 && (setFound(!0), socket.emit("send_message", { message: "found waldo" }));
   }
   return /* @__PURE__ */ jsxDEV5("div", { children: [
     /* @__PURE__ */ jsxDEV5("h1", { className: "text-3xl font-bold underline", children: "Hello world!" }, void 0, !1, {
       fileName: "app/routes/_index.tsx",
-      lineNumber: 38,
+      lineNumber: 50,
       columnNumber: 7
     }, this),
     /* @__PURE__ */ jsxDEV5("img", { src: "/assets/Waldo.jpeg", alt: "Waldo", onClick: handleClick }, void 0, !1, {
       fileName: "app/routes/_index.tsx",
-      lineNumber: 39,
+      lineNumber: 51,
       columnNumber: 7
     }, this),
     /* @__PURE__ */ jsxDEV5(
@@ -332,25 +332,55 @@ function Index() {
       !1,
       {
         fileName: "app/routes/_index.tsx",
-        lineNumber: 40,
+        lineNumber: 52,
         columnNumber: 7
       },
       this
     ),
     /* @__PURE__ */ jsxDEV5(Button, { onClick: sendMessage, children: "Sumbit" }, void 0, !1, {
       fileName: "app/routes/_index.tsx",
-      lineNumber: 45,
+      lineNumber: 57,
       columnNumber: 7
     }, this)
   ] }, void 0, !0, {
     fileName: "app/routes/_index.tsx",
-    lineNumber: 37,
+    lineNumber: 49,
+    columnNumber: 5
+  }, this);
+}
+
+// app/routes/room.tsx
+var room_exports = {};
+__export(room_exports, {
+  default: () => Room
+});
+import * as io2 from "socket.io-client";
+import { jsxDEV as jsxDEV6 } from "react/jsx-dev-runtime";
+var socket2 = io2.connect("http://localhost:3001/");
+function Room() {
+  let sendMessage = () => {
+    console.log(1), socket2.emit("send_message", {});
+  };
+  return /* @__PURE__ */ jsxDEV6("div", { className: "p-4 flex gap-4", children: [
+    /* @__PURE__ */ jsxDEV6(Button, { children: "Join Room" }, void 0, !1, {
+      fileName: "app/routes/room.tsx",
+      lineNumber: 14,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV6(Button, { children: "Start Room" }, void 0, !1, {
+      fileName: "app/routes/room.tsx",
+      lineNumber: 15,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, !0, {
+    fileName: "app/routes/room.tsx",
+    lineNumber: 13,
     columnNumber: 5
   }, this);
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-ZAFVPHE5.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-33LSIELV.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-U6TTRABJ.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-PNWZPECO.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-2F4JRDK5.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "b490ad1a", hmr: { runtime: "/build/_shared/chunk-U6TTRABJ.js", timestamp: 1700358661439 }, url: "/build/manifest-B490AD1A.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-NEWLRCSP.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-CQEVPDCO.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-U6TTRABJ.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-ZLKOQAXK.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-TNDCPA2P.js", imports: ["/build/_shared/chunk-L3Z4JAQH.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/room": { id: "routes/room", parentId: "root", path: "room", index: void 0, caseSensitive: void 0, module: "/build/routes/room-XYL7G4LC.js", imports: ["/build/_shared/chunk-L3Z4JAQH.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "08013d40", hmr: { runtime: "/build/_shared/chunk-U6TTRABJ.js", timestamp: 1700361293464 }, url: "/build/manifest-08013D40.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "development", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
@@ -369,6 +399,14 @@ var mode = "development", assetsBuildDirectory = "public/build", future = { v3_f
     index: !0,
     caseSensitive: void 0,
     module: index_exports
+  },
+  "routes/room": {
+    id: "routes/room",
+    parentId: "root",
+    path: "room",
+    index: void 0,
+    caseSensitive: void 0,
+    module: room_exports
   }
 };
 export {

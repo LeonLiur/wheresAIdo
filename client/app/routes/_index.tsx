@@ -15,6 +15,7 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   const [msg, setMsg] = useState();
+  const [found, setFound] = useState(false);
 
   useEffect(() => {
     socket.on("receive_message", (data: any) => {
@@ -28,9 +29,20 @@ export default function Index() {
   };
 
   function handleClick(event: any) {
+    const threshold = 15;
     const x = event.clientX;
     const y = event.clientY;
     console.log(x, y);
+    if (
+      !found &&
+      x < 553 + threshold &&
+      x > 553 - threshold &&
+      y < 223 + threshold &&
+      y > 233 - threshold
+    ) {
+      setFound(true);
+      socket.emit("send_message", { message: "found waldo" });
+    }
   }
 
   return (

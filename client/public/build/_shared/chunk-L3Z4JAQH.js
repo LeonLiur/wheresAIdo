@@ -4,7 +4,6 @@ import {
 import {
   createHotContext
 } from "/build/_shared/chunk-U6TTRABJ.js";
-import "/build/_shared/chunk-UWV35TSL.js";
 import {
   require_react
 } from "/build/_shared/chunk-BOXFZXVX.js";
@@ -2725,51 +2724,6 @@ $RefreshReg$(_c, "Button$React.forwardRef");
 $RefreshReg$(_c2, "Button");
 window.$RefreshReg$ = prevRefreshReg;
 window.$RefreshSig$ = prevRefreshSig;
-
-// app/@/components/ui/input.tsx
-var React2 = __toESM(require_react(), 1);
-var import_jsx_dev_runtime2 = __toESM(require_jsx_dev_runtime(), 1);
-if (!window.$RefreshReg$ || !window.$RefreshSig$ || !window.$RefreshRuntime$) {
-  console.warn("remix:hmr: React Fast Refresh only works when the Remix compiler is running in development mode.");
-} else {
-  prevRefreshReg = window.$RefreshReg$;
-  prevRefreshSig = window.$RefreshSig$;
-  window.$RefreshReg$ = (type, id) => {
-    window.$RefreshRuntime$.register(type, '"app/@/components/ui/input.tsx"' + id);
-  };
-  window.$RefreshSig$ = window.$RefreshRuntime$.createSignatureFunctionForTransform;
-}
-var prevRefreshReg;
-var prevRefreshSig;
-if (import.meta) {
-  import.meta.hot = createHotContext(
-    //@ts-expect-error
-    "app/@/components/ui/input.tsx"
-  );
-  import.meta.hot.lastModified = "1700351606424.877";
-}
-var Input = React2.forwardRef(_c3 = ({
-  className,
-  type,
-  ...props
-}, ref) => {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("input", { type, className: cn("flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300", className), ref, ...props }, void 0, false, {
-    fileName: "app/@/components/ui/input.tsx",
-    lineNumber: 28,
-    columnNumber: 10
-  }, this);
-});
-_c22 = Input;
-Input.displayName = "Input";
-var _c3;
-var _c22;
-$RefreshReg$(_c3, "Input$React.forwardRef");
-$RefreshReg$(_c22, "Input");
-window.$RefreshReg$ = prevRefreshReg;
-window.$RefreshSig$ = prevRefreshSig;
-
-// app/routes/_index.tsx
-var import_react3 = __toESM(require_react(), 1);
 
 // node_modules/engine.io-parser/build/esm/commons.js
 var PACKET_TYPES = /* @__PURE__ */ Object.create(null);
@@ -5813,11 +5767,11 @@ var Manager = class extends Emitter {
     if (~this._readyState.indexOf("open"))
       return this;
     this.engine = new Socket(this.uri, this.opts);
-    const socket2 = this.engine;
+    const socket = this.engine;
     const self2 = this;
     this._readyState = "opening";
     this.skipReconnect = false;
-    const openSubDestroy = on(socket2, "open", function() {
+    const openSubDestroy = on(socket, "open", function() {
       self2.onopen();
       fn && fn();
     });
@@ -5831,13 +5785,13 @@ var Manager = class extends Emitter {
         this.maybeReconnectOnOpen();
       }
     };
-    const errorSub = on(socket2, "error", onError);
+    const errorSub = on(socket, "error", onError);
     if (false !== this._timeout) {
       const timeout = this._timeout;
       const timer = this.setTimeoutFn(() => {
         openSubDestroy();
         onError(new Error("timeout"));
-        socket2.close();
+        socket.close();
       }, timeout);
       if (this.opts.autoUnref) {
         timer.unref();
@@ -5868,8 +5822,8 @@ var Manager = class extends Emitter {
     this.cleanup();
     this._readyState = "open";
     this.emitReserved("open");
-    const socket2 = this.engine;
-    this.subs.push(on(socket2, "ping", this.onping.bind(this)), on(socket2, "data", this.ondata.bind(this)), on(socket2, "error", this.onerror.bind(this)), on(socket2, "close", this.onclose.bind(this)), on(this.decoder, "decoded", this.ondecoded.bind(this)));
+    const socket = this.engine;
+    this.subs.push(on(socket, "ping", this.onping.bind(this)), on(socket, "data", this.ondata.bind(this)), on(socket, "error", this.onerror.bind(this)), on(socket, "close", this.onclose.bind(this)), on(this.decoder, "decoded", this.ondecoded.bind(this)));
   }
   /**
    * Called upon a ping.
@@ -5916,14 +5870,14 @@ var Manager = class extends Emitter {
    * @public
    */
   socket(nsp, opts) {
-    let socket2 = this.nsps[nsp];
-    if (!socket2) {
-      socket2 = new Socket2(this, nsp, opts);
-      this.nsps[nsp] = socket2;
-    } else if (this._autoConnect && !socket2.active) {
-      socket2.connect();
+    let socket = this.nsps[nsp];
+    if (!socket) {
+      socket = new Socket2(this, nsp, opts);
+      this.nsps[nsp] = socket;
+    } else if (this._autoConnect && !socket.active) {
+      socket.connect();
     }
-    return socket2;
+    return socket;
   }
   /**
    * Called upon a socket close.
@@ -5931,11 +5885,11 @@ var Manager = class extends Emitter {
    * @param socket
    * @private
    */
-  _destroy(socket2) {
+  _destroy(socket) {
     const nsps = Object.keys(this.nsps);
     for (const nsp of nsps) {
-      const socket3 = this.nsps[nsp];
-      if (socket3.active) {
+      const socket2 = this.nsps[nsp];
+      if (socket2.active) {
         return;
       }
     }
@@ -6085,91 +6039,9 @@ Object.assign(lookup2, {
   connect: lookup2
 });
 
-// app/routes/_index.tsx
-var import_jsx_dev_runtime3 = __toESM(require_jsx_dev_runtime(), 1);
-if (!window.$RefreshReg$ || !window.$RefreshSig$ || !window.$RefreshRuntime$) {
-  console.warn("remix:hmr: React Fast Refresh only works when the Remix compiler is running in development mode.");
-} else {
-  prevRefreshReg = window.$RefreshReg$;
-  prevRefreshSig = window.$RefreshSig$;
-  window.$RefreshReg$ = (type, id) => {
-    window.$RefreshRuntime$.register(type, '"app/routes/_index.tsx"' + id);
-  };
-  window.$RefreshSig$ = window.$RefreshRuntime$.createSignatureFunctionForTransform;
-}
-var prevRefreshReg;
-var prevRefreshSig;
-var _s = $RefreshSig$();
-if (import.meta) {
-  import.meta.hot = createHotContext(
-    //@ts-expect-error
-    "app/routes/_index.tsx"
-  );
-  import.meta.hot.lastModified = "1700358541969.5398";
-}
-var socket = lookup2("http://localhost:3001/");
-var meta = () => {
-  return [{
-    title: "New Remix App"
-  }, {
-    name: "description",
-    content: "Welcome to Remix!"
-  }];
-};
-function Index() {
-  _s();
-  const [msg, setMsg] = (0, import_react3.useState)();
-  (0, import_react3.useEffect)(() => {
-    socket.on("receive_message", (data) => {
-      alert(data.message);
-    });
-  }, [socket]);
-  const sendMessage = () => {
-    console.log(1);
-    socket.emit("send_message", {
-      message: msg
-    });
-  };
-  function handleClick(event) {
-    const x = event.clientX;
-    const y = event.clientY;
-    console.log(x, y);
-  }
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("h1", { className: "text-3xl font-bold underline", children: "Hello world!" }, void 0, false, {
-      fileName: "app/routes/_index.tsx",
-      lineNumber: 55,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("img", { src: "/assets/Waldo.jpeg", alt: "Waldo", onClick: handleClick }, void 0, false, {
-      fileName: "app/routes/_index.tsx",
-      lineNumber: 56,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(Input, { type: "email", placeholder: "Email", onChange: (e) => setMsg(e.target.value) }, void 0, false, {
-      fileName: "app/routes/_index.tsx",
-      lineNumber: 57,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(Button, { onClick: sendMessage, children: "Sumbit" }, void 0, false, {
-      fileName: "app/routes/_index.tsx",
-      lineNumber: 58,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, true, {
-    fileName: "app/routes/_index.tsx",
-    lineNumber: 54,
-    columnNumber: 10
-  }, this);
-}
-_s(Index, "9UOYRrvfRcRa04ckGwzuhIvrOAw=");
-_c4 = Index;
-var _c4;
-$RefreshReg$(_c4, "Index");
-window.$RefreshReg$ = prevRefreshReg;
-window.$RefreshSig$ = prevRefreshSig;
 export {
-  Index as default,
-  meta
+  cn,
+  Button,
+  lookup2 as lookup
 };
-//# sourceMappingURL=/build/routes/_index-2F4JRDK5.js.map
+//# sourceMappingURL=/build/_shared/chunk-L3Z4JAQH.js.map
