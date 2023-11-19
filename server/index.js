@@ -4,16 +4,28 @@ const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 require('dotenv').config()
+const admin = require("firebase-admin");
+const serviceAccount = require("./admin.json");
+const { getDatabase, child } = require('firebase-admin/database')
+const bodyParser = require('body-parser')
 
 app.use(cors());
+app.use(express.json())
 
 const server = http.createServer(app);
+const OPENAI_KEY = process.env.OPENAI_KEY;
 
-const OPENAI_KEY = process.env.REACT_APP_OPENAI_KEY;
+
+const firebaseApp = admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://waldo-224bf-default-rtdb.firebaseio.com"
+});
+
+const db = getDatabase(firebaseApp)
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3001",
+    origin: process.env.CLIENT_URL,
     methods: ["GET", "POST"],
   },
 });
@@ -58,6 +70,28 @@ app.get('/generate_waldo', async (req, res) => {
 server.listen(3001, () => {
 });
 
-app.get('/getRoom', (req, res) => {
-  res.send('11')
+app.post('/createRoom', async(req, res) => {
+
+
+  let roomNum = db.ref(`roomNumbers`)
+  let roomsInUse = []
+  let roomNumber = 11
+  roomNum.get().then((snapshot) => {
+    roomsInUse = snapshot.val()
+    roomNumber = roomsInUse[roomsInUse.length - 1] + 1
+
+    let roomRef = db.ref(`rooms/${roomNumber}`)
+    roomRef.set({
+      roomNumber,
+      players: [{
+        id: req.body.uid,
+        score: 0,
+        name: ""
+      }]
+    })
+
+    res.send(JSON.stringify(roomNumber))
+
+  })
+
 })

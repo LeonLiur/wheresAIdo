@@ -5,11 +5,12 @@ import { SyntheticEvent, useEffect, useState } from "react";
 import * as io from "socket.io-client";
 import waldo from "../../public/waldo.json";
 import new_waldo from "../../public/assets/new_waldo.png";
+import config from "../../public/config.json";
 
 const threshold = 1.5;
 const pic_id = 1;
 
-const socket = io.connect("http://localhost:3001/");
+const socket = io.connect(config.SERVER_URL);
 
 export const meta: MetaFunction = () => {
   return [
@@ -26,8 +27,6 @@ export default function Index() {
       alert(data.message);
     });
   }, [socket]);
-
-  
 
   function handleClick(event: any) {
     const img = new Image();
@@ -66,18 +65,14 @@ export default function Index() {
 
   return (
     <div>
-      <img 
-        src={waldo.coords[pic_id].src}
-        alt="Waldo" 
-        onClick={handleClick} 
-      />
-      {/* put the image for waldo here */} 
+      <img src={waldo.coords[pic_id].src} alt="Waldo" onClick={handleClick} />
+      {/* put the image for waldo here */}
       <img
         src={new_waldo}
         alt="new_waldo"
         style={{
           position: "absolute",
-          top: (waldo.coords[pic_id].y),
+          top: waldo.coords[pic_id].y,
           left: waldo.coords[pic_id].x,
           width: "10%", // Adjust the size as needed
           height: "10%", // Adjust the size as needed

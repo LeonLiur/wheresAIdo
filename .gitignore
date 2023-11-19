@@ -1,4 +1,5 @@
 node_modules
+admin.json
 */.cache
 .cache
 /client/build/
