@@ -13,10 +13,10 @@ app.get('/generate_waldo', async (req, res) => {
       'Authorization': `Bearer ${process.env.OPENAI_KEY}`
     },
     body: JSON.stringify({
-      model: 'dall-e-3',
+      model: 'dall-e-2',
       prompt: `${req.query.prompt}`,
       n: 1,
-      size: '1024x1024'
+      size: '256x256'
     })
   }).then(response => response.json()).catch(error => console.error('Error:', error));
 
@@ -25,10 +25,10 @@ app.get('/generate_waldo', async (req, res) => {
   res.status(200).send({ img_url: URL })
 })
 
-app.listen(3000, () => {
+app.listen(3001, () => {
   if (process.env.NODE_ENV === "development") {
     broadcastDevReady(build);
   }
-  console.log("App listening on http://localhost:3000");
+  console.log("App listening on http://localhost:3001");
 });
 
