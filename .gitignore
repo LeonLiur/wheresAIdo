@@ -1,8 +1,5 @@
 node_modules
-*/.cache
-.cache
-client/build/
-**/public/build/
-build/
+
+**/.cache
 .env
-.DS_Store
+**/build
