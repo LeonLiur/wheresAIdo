@@ -5,13 +5,13 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration
-} from "/build/_shared/chunk-33LSIELV.js";
+} from "/build/_shared/chunk-WW5UST6D.js";
 import {
   require_jsx_dev_runtime
 } from "/build/_shared/chunk-XU7DNSPJ.js";
 import {
   createHotContext
-} from "/build/_shared/chunk-U6TTRABJ.js";
+} from "/build/_shared/chunk-OPY7SWG5.js";
 import "/build/_shared/chunk-UWV35TSL.js";
 import "/build/_shared/chunk-GIAAE3CH.js";
 import "/build/_shared/chunk-BOXFZXVX.js";
@@ -20,7 +20,7 @@ import {
 } from "/build/_shared/chunk-PNG5AS42.js";
 
 // app/tailwind.css
-var tailwind_default = "/build/_assets/tailwind-K3IZL4AS.css";
+var tailwind_default = "/build/_assets/tailwind-KJUKT2NQ.css";
 
 // app/root.tsx
 var import_jsx_dev_runtime = __toESM(require_jsx_dev_runtime(), 1);
@@ -115,4 +115,4 @@ export {
   App as default,
   links
 };
-//# sourceMappingURL=/build/root-PNWZPECO.js.map
+//# sourceMappingURL=/build/root-WJGKTI2B.js.map

@@ -319,6 +319,9 @@ video {
   --tw-backdrop-saturate: ;
   --tw-backdrop-sepia: ;
 }
+.relative {
+  position: relative;
+}
 .flex {
   display: flex;
 }
@@ -569,4 +572,4 @@ video {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(203 213 225 / var(--tw-ring-opacity));
 }
-/*# sourceMappingURL=/build/_assets/tailwind-HIDWMCKY.css.map */
+/*# sourceMappingURL=/build/_assets/tailwind-ODAHQN2T.css.map */

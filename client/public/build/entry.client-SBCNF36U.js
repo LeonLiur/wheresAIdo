@@ -3,13 +3,13 @@ import {
 } from "/build/_shared/chunk-ZWGWGGVF.js";
 import {
   RemixBrowser
-} from "/build/_shared/chunk-33LSIELV.js";
+} from "/build/_shared/chunk-WW5UST6D.js";
 import {
   require_jsx_dev_runtime
 } from "/build/_shared/chunk-XU7DNSPJ.js";
 import {
   createHotContext
-} from "/build/_shared/chunk-U6TTRABJ.js";
+} from "/build/_shared/chunk-OPY7SWG5.js";
 import "/build/_shared/chunk-UWV35TSL.js";
 import "/build/_shared/chunk-GIAAE3CH.js";
 import {
@@ -28,7 +28,7 @@ if (import.meta) {
     //@ts-expect-error
     "app/entry.client.tsx"
   );
-  import.meta.hot.lastModified = "1700349836854.0916";
+  import.meta.hot.lastModified = "1700358912554.1167";
 }
 (0, import_react2.startTransition)(() => {
   (0, import_client.hydrateRoot)(
@@ -44,4 +44,4 @@ if (import.meta) {
     }, this)
   );
 });
-//# sourceMappingURL=/build/entry.client-ZAFVPHE5.js.map
+//# sourceMappingURL=/build/entry.client-SBCNF36U.js.map

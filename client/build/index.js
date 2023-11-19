@@ -120,7 +120,7 @@ __export(root_exports, {
 });
 
 // app/tailwind.css
-var tailwind_default = "/build/_assets/tailwind-K3IZL4AS.css";
+var tailwind_default = "/build/_assets/tailwind-KJUKT2NQ.css";
 
 // app/root.tsx
 import {
@@ -202,155 +202,50 @@ __export(index_exports, {
   default: () => Index,
   meta: () => meta
 });
+import { useState } from "react";
 
-// app/@/components/ui/button.tsx
-import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
-import { cva } from "class-variance-authority";
-
-// app/@/lib/utils.ts
-import { clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-function cn(...inputs) {
-  return twMerge(clsx(inputs));
-}
-
-// app/@/components/ui/button.tsx
-import { jsxDEV as jsxDEV3 } from "react/jsx-dev-runtime";
-var buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300",
-  {
-    variants: {
-      variant: {
-        default: "bg-slate-900 text-slate-50 hover:bg-slate-900/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90",
-        destructive: "bg-red-500 text-slate-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-slate-50 dark:hover:bg-red-900/90",
-        outline: "border border-slate-200 bg-white hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50",
-        secondary: "bg-slate-100 text-slate-900 hover:bg-slate-100/80 dark:bg-slate-800 dark:text-slate-50 dark:hover:bg-slate-800/80",
-        ghost: "hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50",
-        link: "text-slate-900 underline-offset-4 hover:underline dark:text-slate-50"
-      },
-      size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10"
-      }
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default"
-    }
-  }
-), Button = React.forwardRef(
-  ({ className, variant, size, asChild = !1, ...props }, ref) => /* @__PURE__ */ jsxDEV3(
-    asChild ? Slot : "button",
+// public/waldo.json
+var waldo_default = {
+  coords: [
     {
-      className: cn(buttonVariants({ variant, size, className })),
-      ref,
-      ...props
+      src: "/Users/yiyixu/Documents/Personal/wheresAIdo/client/public/assets/1.jpg",
+      x: "35.506003430531734",
+      y: "43.52469996558499"
     },
-    void 0,
-    !1,
-    {
-      fileName: "app/@/components/ui/button.tsx",
-      lineNumber: 48,
-      columnNumber: 7
-    },
-    this
-  )
-);
-Button.displayName = "Button";
-
-// app/@/components/ui/input.tsx
-import * as React2 from "react";
-import { jsxDEV as jsxDEV4 } from "react/jsx-dev-runtime";
-var Input = React2.forwardRef(
-  ({ className, type, ...props }, ref) => /* @__PURE__ */ jsxDEV4(
-    "input",
-    {
-      type,
-      className: cn(
-        "flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300",
-        className
-      ),
-      ref,
-      ...props
-    },
-    void 0,
-    !1,
-    {
-      fileName: "app/@/components/ui/input.tsx",
-      lineNumber: 11,
-      columnNumber: 7
-    },
-    this
-  )
-);
-Input.displayName = "Input";
+    {}
+  ]
+};
 
 // app/routes/_index.tsx
-import { useEffect, useState } from "react";
-import * as io from "socket.io-client";
-import { jsxDEV as jsxDEV5 } from "react/jsx-dev-runtime";
-var socket = io.connect("http://localhost:3001/"), meta = () => [
+import { jsxDEV as jsxDEV3 } from "react/jsx-dev-runtime";
+var meta = () => [
   { title: "New Remix App" },
   { name: "description", content: "Welcome to Remix!" }
 ];
 function Index() {
-  let [msg, setMsg] = useState();
-  useEffect(() => {
-    socket.on("receive_message", (data) => {
-      alert(data.message);
-    });
-  }, [socket]);
-  let sendMessage = () => {
-    console.log(1), socket.emit("send_message", { message: msg });
+  let [msg, setMsg] = useState(), sendMessage = () => {
+    console.log(1);
   };
   function handleClick(event) {
-    let x = event.clientX, y = event.clientY;
-    console.log(x, y);
+    let img = new Image();
+    img.src = "/assets/1.jpg", img.onload = () => {
+      let renderedWidth = Math.min(window.innerWidth, img.width), renderedHeight = img.height * (window.innerWidth / img.width), x = event.clientX / renderedWidth * 100, y = event.clientY / renderedHeight * 100, waldo_x = waldo_default.coords[0].x, waldo_y = waldo_default.coords[0].y;
+      Math.abs(x - Number(waldo_x)) < 1.5 && Math.abs(y - Number(waldo_y)) < 1.5 ? console.log("You found Waldo!") : console.log("Try again!");
+    };
   }
-  return /* @__PURE__ */ jsxDEV5("div", { children: [
-    /* @__PURE__ */ jsxDEV5("h1", { className: "text-3xl font-bold underline", children: "Hello world!" }, void 0, !1, {
-      fileName: "app/routes/_index.tsx",
-      lineNumber: 38,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV5("img", { src: "/assets/Waldo.jpeg", alt: "Waldo", onClick: handleClick }, void 0, !1, {
-      fileName: "app/routes/_index.tsx",
-      lineNumber: 39,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ jsxDEV5(
-      Input,
-      {
-        type: "email",
-        placeholder: "Email",
-        onChange: (e) => setMsg(e.target.value)
-      },
-      void 0,
-      !1,
-      {
-        fileName: "app/routes/_index.tsx",
-        lineNumber: 40,
-        columnNumber: 7
-      },
-      this
-    ),
-    /* @__PURE__ */ jsxDEV5(Button, { onClick: sendMessage, children: "Sumbit" }, void 0, !1, {
-      fileName: "app/routes/_index.tsx",
-      lineNumber: 45,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, !0, {
+  return /* @__PURE__ */ jsxDEV3("div", { children: /* @__PURE__ */ jsxDEV3("img", { src: "/assets/1.jpg", alt: "Waldo", onClick: handleClick }, void 0, !1, {
     fileName: "app/routes/_index.tsx",
-    lineNumber: 37,
+    lineNumber: 65,
+    columnNumber: 7
+  }, this) }, void 0, !1, {
+    fileName: "app/routes/_index.tsx",
+    lineNumber: 64,
     columnNumber: 5
   }, this);
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-ZAFVPHE5.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-33LSIELV.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-U6TTRABJ.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-PNWZPECO.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-2F4JRDK5.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "b490ad1a", hmr: { runtime: "/build/_shared/chunk-U6TTRABJ.js", timestamp: 1700358661439 }, url: "/build/manifest-B490AD1A.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-SBCNF36U.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-WW5UST6D.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-OPY7SWG5.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-WJGKTI2B.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-PMFZYW7F.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "a56bbd92", hmr: { runtime: "/build/_shared/chunk-OPY7SWG5.js", timestamp: 1700364171624 }, url: "/build/manifest-A56BBD92.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "development", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
