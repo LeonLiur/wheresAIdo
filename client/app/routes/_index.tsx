@@ -5,7 +5,7 @@ import { SyntheticEvent, useEffect, useState } from "react";
 import * as io from "socket.io-client";
 import waldo from '../../public/waldo.json';
 
-
+const threshold = 1.5;
 
 // const socket = io.connect("http://localhost:3001/");
 
@@ -19,6 +19,7 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   const [msg, setMsg] = useState();
+  const [found, setFound] = useState(false);
 
   // useEffect(() => {
   //   socket.on("receive_message", (data: any) => {
@@ -52,7 +53,7 @@ export default function Index() {
 
       // console.log(waldo_x, waldo_y);
 
-      if (Math.abs(x - Number(waldo_x)) < 1.5 && Math.abs(y - Number(waldo_y)) < 1.5) {
+      if (Math.abs(x - Number(waldo_x)) < threshold && Math.abs(y - Number(waldo_y)) < threshold) {
         console.log("You found Waldo!");
       } else {
         console.log("Try again!");
