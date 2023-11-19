@@ -385,20 +385,6 @@ function App2() {
       columnNumber: 7
     }, this),
     /* @__PURE__ */ jsxDEV6(Button, { onClick: sendMessage, children: " Send mock message" }, void 0, !1, {
-// app/routes/room.tsx
-import * as io2 from "socket.io-client";
-import { jsxDEV as jsxDEV5 } from "react/jsx-dev-runtime";
-var socket2 = io2.connect("http://localhost:3001/");
-async function getRoom() {
-  let result = await fetch("http://localhost:3001/getRoom");
-  console.log(await result.json());
-}
-function Room() {
-  let sendMessage = () => {
-    console.log(1), socket2.emit("send_message", {});
-  };
-  return /* @__PURE__ */ jsxDEV5("div", { className: "p-4 flex gap-4", children: [
-    /* @__PURE__ */ jsxDEV5(Button, { children: "Join Room" }, void 0, !1, {
       fileName: "app/routes/room.tsx",
       lineNumber: 34,
       columnNumber: 7
@@ -417,7 +403,7 @@ function Room() {
 var room_default = App2;
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-UU3ECFOX.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-QIB4ZZND.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-OPY7SWG5.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-QNYJ6GL3.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-BJCL56EK.js", imports: ["/build/_shared/chunk-KRYXFZVY.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/room": { id: "routes/room", parentId: "root", path: "room", index: void 0, caseSensitive: void 0, module: "/build/routes/room-NIUYMZ6T.js", imports: ["/build/_shared/chunk-KRYXFZVY.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "f6b470ed", hmr: { runtime: "/build/_shared/chunk-OPY7SWG5.js", timestamp: 1700369023639 }, url: "/build/manifest-F6B470ED.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-EFKWMO43.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-7QKM455H.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-NEQPD774.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-QDCTNJ5B.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-PL6464AT.js", imports: ["/build/_shared/chunk-KRYXFZVY.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/room": { id: "routes/room", parentId: "root", path: "room", index: void 0, caseSensitive: void 0, module: "/build/routes/room-PI2ENIYM.js", imports: ["/build/_shared/chunk-KRYXFZVY.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "e43bfd21", hmr: { runtime: "/build/_shared/chunk-NEQPD774.js", timestamp: 1700378016121 }, url: "/build/manifest-E43BFD21.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "development", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
