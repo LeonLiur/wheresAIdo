@@ -49,6 +49,7 @@ io.on("connection", (socket) => {
   })
 
   socket.on("add_points", (data) => {
+    console.log("Adding points")
     let playerRef = db.ref(`rooms/${data.room_number}/players/${data.uid}`)
     // if they ran out of time
     playerRef.get().then((snapshot) => {
@@ -57,7 +58,9 @@ io.on("connection", (socket) => {
       // give them points
       current_points += data.time_left
       playerRef.update({"score": current_points})
-    })   
+    })
+     
+    socket.broadcast.emit("reset_game", {})
   })
 
   socket.on("display_image", async(room) => {
