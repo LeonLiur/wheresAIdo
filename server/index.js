@@ -32,7 +32,7 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
-  
+
   socket.broadcast.emit("user_joined", socket.id)
 
   socket.on("send_message", (data) => {
@@ -42,6 +42,18 @@ io.on("connection", (socket) => {
 
   socket.on("join_room", (roomNum) => {
     socket.join(roomNum);
+  })
+
+  socket.on("add_points", (data) => {
+    let playerRef = db.ref(`rooms/${data.room_number}/players/${data.uid}`)
+    // if they ran out of time
+    playerRef.get().then((snapshot) => {
+      var current_points = snapshot.child("score").val()
+      
+      // give them points
+      current_points += data.time_left
+      playerRef.update({"score": current_points})
+    })   
   })
 
 });
@@ -68,11 +80,10 @@ app.get('/generate_waldo', async (req, res) => {
 })
 
 server.listen(3001, () => {
+  console.log("Listening in on 3001!")
 });
 
-app.post('/createRoom', async(req, res) => {
-
-
+app.post('/createRoom', async (req, res) => {
   let roomNum = db.ref(`roomNumbers`)
   let roomsInUse = []
   let roomNumber = 11
@@ -90,13 +101,11 @@ app.post('/createRoom', async(req, res) => {
         }
       }
 
-      
+
     })
 
     roomNum.update([...roomsInUse, roomNumber])
 
     res.send(JSON.stringify(roomNumber))
-
   })
-
 })
