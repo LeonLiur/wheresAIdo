@@ -1,5 +1,5 @@
 import stylesheet from "~/tailwind.css";
-import type { LinksFunction } from "@remix-run/node";
+import { json, type LinksFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -8,12 +8,16 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "./firebaseConfig";
+import { useEffect } from "react";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
 
 export default function App() {
+  const app = initializeApp(firebaseConfig);
   return (
     <html lang="en">
       <head>

@@ -5,10 +5,11 @@ import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import * as io from "socket.io-client";
 import waldo from "../../public/waldo.json";
 import new_waldo from "../../public/assets/new_waldo.png";
+import config from "../../public/config.json";
 
 const threshold = 5;
 
-const socket = io.connect("http://localhost:3001/");
+const socket = io.connect(config.SERVER_URL);
 
 export const meta: MetaFunction = () => {
   return [
