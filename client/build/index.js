@@ -120,7 +120,7 @@ __export(root_exports, {
 });
 
 // app/tailwind.css
-var tailwind_default = "/build/_assets/tailwind-6EG5S6DK.css";
+var tailwind_default = "/build/_assets/tailwind-HFOVOYMF.css";
 
 // app/root.tsx
 import {
@@ -236,6 +236,9 @@ var waldo_default = {
   ]
 };
 
+// public/assets/new_waldo.png
+var new_waldo_default = "/build/_assets/new_waldo-4PIDWJWO.png";
+
 // app/routes/_index.tsx
 import { jsxDEV as jsxDEV3 } from "react/jsx-dev-runtime";
 var threshold = 1.5, pic_id = 1, socket = io.connect("http://localhost:3001/"), meta = () => [
@@ -256,13 +259,52 @@ function Index() {
       found || (Math.abs(x - Number(waldo_x)) < threshold && Math.abs(y - Number(waldo_y)) < threshold ? (console.log("You found Waldo!"), socket.emit("send_message", { message: "found waldo" }), setFound(!1)) : console.log("Try again!"));
     };
   }
-  return /* @__PURE__ */ jsxDEV3("div", { children: /* @__PURE__ */ jsxDEV3("img", { src: waldo_default.coords[pic_id].src, alt: "Waldo", onClick: handleClick }, void 0, !1, {
+  return /* @__PURE__ */ jsxDEV3("div", { children: [
+    /* @__PURE__ */ jsxDEV3(
+      "img",
+      {
+        src: waldo_default.coords[pic_id].src,
+        alt: "Waldo",
+        onClick: handleClick
+      },
+      void 0,
+      !1,
+      {
+        fileName: "app/routes/_index.tsx",
+        lineNumber: 69,
+        columnNumber: 7
+      },
+      this
+    ),
+    /* @__PURE__ */ jsxDEV3(
+      "img",
+      {
+        src: new_waldo_default,
+        alt: "new_waldo",
+        style: {
+          position: "absolute",
+          top: waldo_default.coords[pic_id].y / 1,
+          left: waldo_default.coords[pic_id].x,
+          width: "10%",
+          // Adjust the size as needed
+          height: "10%",
+          // Adjust the size as needed
+          pointerEvents: "none"
+          // Allow clicks to pass through the overlay
+        }
+      },
+      void 0,
+      !1,
+      {
+        fileName: "app/routes/_index.tsx",
+        lineNumber: 75,
+        columnNumber: 7
+      },
+      this
+    )
+  ] }, void 0, !0, {
     fileName: "app/routes/_index.tsx",
-    lineNumber: 66,
-    columnNumber: 7
-  }, this) }, void 0, !1, {
-    fileName: "app/routes/_index.tsx",
-    lineNumber: 65,
+    lineNumber: 68,
     columnNumber: 5
   }, this);
 }
@@ -385,20 +427,6 @@ function App2() {
       columnNumber: 7
     }, this),
     /* @__PURE__ */ jsxDEV6(Button, { onClick: sendMessage, children: " Send mock message" }, void 0, !1, {
-// app/routes/room.tsx
-import * as io2 from "socket.io-client";
-import { jsxDEV as jsxDEV5 } from "react/jsx-dev-runtime";
-var socket2 = io2.connect("http://localhost:3001/");
-async function getRoom() {
-  let result = await fetch("http://localhost:3001/getRoom");
-  console.log(await result.json());
-}
-function Room() {
-  let sendMessage = () => {
-    console.log(1), socket2.emit("send_message", {});
-  };
-  return /* @__PURE__ */ jsxDEV5("div", { className: "p-4 flex gap-4", children: [
-    /* @__PURE__ */ jsxDEV5(Button, { children: "Join Room" }, void 0, !1, {
       fileName: "app/routes/room.tsx",
       lineNumber: 34,
       columnNumber: 7
@@ -417,7 +445,7 @@ function Room() {
 var room_default = App2;
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-UU3ECFOX.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-QIB4ZZND.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-OPY7SWG5.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-QNYJ6GL3.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-BJCL56EK.js", imports: ["/build/_shared/chunk-KRYXFZVY.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/room": { id: "routes/room", parentId: "root", path: "room", index: void 0, caseSensitive: void 0, module: "/build/routes/room-NIUYMZ6T.js", imports: ["/build/_shared/chunk-KRYXFZVY.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "f6b470ed", hmr: { runtime: "/build/_shared/chunk-OPY7SWG5.js", timestamp: 1700369023639 }, url: "/build/manifest-F6B470ED.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-D55QUUUD.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-XXIY3PRO.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-THDIDIAX.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-EWJC6Y56.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-AZXYXKKL.js", imports: ["/build/_shared/chunk-KRYXFZVY.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/room": { id: "routes/room", parentId: "root", path: "room", index: void 0, caseSensitive: void 0, module: "/build/routes/room-Y7UNHGGL.js", imports: ["/build/_shared/chunk-KRYXFZVY.js"], hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "d29de321", hmr: { runtime: "/build/_shared/chunk-THDIDIAX.js", timestamp: 1700378689157 }, url: "/build/manifest-D29DE321.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "development", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
