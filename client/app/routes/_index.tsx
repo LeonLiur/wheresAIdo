@@ -4,6 +4,7 @@ import { Input } from "app/@/components/ui/input";
 import { SyntheticEvent, useEffect, useState } from "react";
 import * as io from "socket.io-client";
 import waldo from "../../public/waldo.json";
+import new_waldo from "../../public/assets/new_waldo.png";
 
 const threshold = 1.5;
 const pic_id = 1;
@@ -25,6 +26,8 @@ export default function Index() {
       alert(data.message);
     });
   }, [socket]);
+
+  
 
   function handleClick(event: any) {
     const img = new Image();
@@ -63,7 +66,24 @@ export default function Index() {
 
   return (
     <div>
-      <img src={waldo.coords[pic_id].src} alt="Waldo" onClick={handleClick} />
+      <img 
+        src={waldo.coords[pic_id].src}
+        alt="Waldo" 
+        onClick={handleClick} 
+      />
+      {/* put the image for waldo here */} 
+      <img
+        src={new_waldo}
+        alt="new_waldo"
+        style={{
+          position: "absolute",
+          top: (waldo.coords[pic_id].y),
+          left: waldo.coords[pic_id].x,
+          width: "10%", // Adjust the size as needed
+          height: "10%", // Adjust the size as needed
+          pointerEvents: "none", // Allow clicks to pass through the overlay
+        }}
+      />
     </div>
   );
 }
