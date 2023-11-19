@@ -3,12 +3,11 @@ import { Button } from "app/@/components/ui/button";
 import { Input } from "app/@/components/ui/input";
 import { SyntheticEvent, useEffect, useState } from "react";
 import * as io from "socket.io-client";
-import waldo from '../../public/waldo.json';
+import waldo from "../../public/waldo.json";
 
 const threshold = 1.5;
 
-// const socket = io.connect("http://localhost:3001/");
-
+const socket = io.connect("http://localhost:3001/");
 
 export const meta: MetaFunction = () => {
   return [
@@ -18,26 +17,19 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  const [msg, setMsg] = useState();
   const [found, setFound] = useState(false);
 
-  // useEffect(() => {
-  //   socket.on("receive_message", (data: any) => {
-  //     alert(data.message);
-  //   });
-  // }, [socket]);
-
-  const sendMessage = () => {
-    console.log(1);
-    // socket.emit("send_message", { message: msg });
-  };
+  useEffect(() => {
+    socket.on("receive_message", (data: any) => {
+      alert(data.message);
+    });
+  }, [socket]);
 
   function handleClick(event: any) {
     const img = new Image();
-    img.src = "/assets/1.jpg";
-  
-    img.onload = () => {
+    img.src = waldo.coords[0].src!;
 
+    img.onload = () => {
       const renderedWidth = Math.min(window.innerWidth, img.width);
       const renderedHeight = img.height * (window.innerWidth / img.width);
 
@@ -53,17 +45,24 @@ export default function Index() {
 
       // console.log(waldo_x, waldo_y);
 
-      if (Math.abs(x - Number(waldo_x)) < threshold && Math.abs(y - Number(waldo_y)) < threshold) {
-        console.log("You found Waldo!");
-      } else {
-        console.log("Try again!");
+      if (!found) {
+        if (
+          Math.abs(x - Number(waldo_x)) < threshold &&
+          Math.abs(y - Number(waldo_y)) < threshold
+        ) {
+          console.log("You found Waldo!");
+          socket.emit("send_message", { message: "found waldo" });
+          setFound(false);
+        } else {
+          console.log("Try again!");
+        }
       }
-    }
+    };
   }
-  
+
   return (
     <div>
-      <img src="/assets/1.jpg" alt="Waldo" onClick={handleClick} />
+      <img src={waldo.coords[0].src} alt="Waldo" onClick={handleClick} />
     </div>
   );
 }
