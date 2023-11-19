@@ -23,6 +23,8 @@ const firebaseApp = admin.initializeApp({
 
 const db = getDatabase(firebaseApp)
 
+const image_size = '1024x1024'
+
 const io = new Server(server, {
   cors: {
     origin: process.env.CLIENT_URL,
@@ -44,6 +46,18 @@ io.on("connection", (socket) => {
     socket.join(message.roomNum);
   })
 
+  socket.on("add_points", (data) => {
+    let playerRef = db.ref(`rooms/${data.room_number}/players/${data.uid}`)
+    // if they ran out of time
+    playerRef.get().then((snapshot) => {
+      var current_points = snapshot.child("score").val()
+      
+      // give them points
+      current_points += data.time_left
+      playerRef.update({"score": current_points})
+    })   
+  })
+
 });
 
 app.get('/generate_waldo', async (req, res) => {
@@ -58,16 +72,18 @@ app.get('/generate_waldo', async (req, res) => {
       model: 'dall-e-2',
       prompt: `${req.query.prompt}`,
       n: 1,
-      size: '256x256'
+      size: image_size
     })
   }).then(response => response.json()).catch(error => console.error('Error:', error));
 
   const URL = dalleRes.data[0].url
+  const size = image_size.split('x')
 
-  res.status(200).send({ img_url: URL })
+  res.status(200).send({ img_url: URL, img_width: size[0], img_height: size[1] })
 })
 
 server.listen(3001, () => {
+  console.log("Listening in on 3001!")
 });
 
 app.post('/createRoom', (req, res) => {
@@ -100,7 +116,6 @@ app.post('/createRoom', (req, res) => {
     roomNum.update([...roomsInUse, roomNumber])
 
     res.send(JSON.stringify(roomNumber))
-
   })
 
 })
