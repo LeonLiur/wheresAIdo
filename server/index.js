@@ -83,12 +83,17 @@ app.post('/createRoom', async(req, res) => {
     let roomRef = db.ref(`rooms/${roomNumber}`)
     roomRef.set({
       roomNumber,
-      players: [{
-        id: req.body.uid,
-        score: 0,
-        name: ""
-      }]
+      players: {
+        [req.body.uid]: {
+          name: "",
+          score: ""
+        }
+      }
+
+      
     })
+
+    roomNum.update([...roomsInUse, roomNumber])
 
     res.send(JSON.stringify(roomNumber))
 
