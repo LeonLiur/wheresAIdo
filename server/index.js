@@ -23,6 +23,8 @@ const firebaseApp = admin.initializeApp({
 
 const db = getDatabase(firebaseApp)
 
+const image_size = '1024x1024'
+
 const io = new Server(server, {
   cors: {
     origin: process.env.CLIENT_URL,
@@ -70,13 +72,14 @@ app.get('/generate_waldo', async (req, res) => {
       model: 'dall-e-2',
       prompt: `${req.query.prompt}`,
       n: 1,
-      size: '256x256'
+      size: image_size
     })
   }).then(response => response.json()).catch(error => console.error('Error:', error));
 
   const URL = dalleRes.data[0].url
+  const size = image_size.split('x')
 
-  res.status(200).send({ img_url: URL })
+  res.status(200).send({ img_url: URL, img_width: size[0], img_height: size[1] })
 })
 
 server.listen(3001, () => {
