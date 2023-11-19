@@ -3,8 +3,12 @@ import { Button } from "app/@/components/ui/button";
 import { Input } from "app/@/components/ui/input";
 import { SyntheticEvent, useEffect, useState } from "react";
 import * as io from "socket.io-client";
+import waldo from '../../public/waldo.json';
 
-const socket = io.connect("http://localhost:3001/");
+const threshold = 1.5;
+
+// const socket = io.connect("http://localhost:3001/");
+
 
 export const meta: MetaFunction = () => {
   return [
@@ -17,44 +21,49 @@ export default function Index() {
   const [msg, setMsg] = useState();
   const [found, setFound] = useState(false);
 
-  useEffect(() => {
-    socket.on("receive_message", (data: any) => {
-      alert(data.message);
-    });
-  }, [socket]);
+  // useEffect(() => {
+  //   socket.on("receive_message", (data: any) => {
+  //     alert(data.message);
+  //   });
+  // }, [socket]);
 
   const sendMessage = () => {
     console.log(1);
-    socket.emit("send_message", { message: msg });
+    // socket.emit("send_message", { message: msg });
   };
 
   function handleClick(event: any) {
-    const threshold = 15;
-    const x = event.clientX;
-    const y = event.clientY;
-    console.log(x, y);
-    if (
-      !found &&
-      x < 553 + threshold &&
-      x > 553 - threshold &&
-      y < 223 + threshold &&
-      y > 233 - threshold
-    ) {
-      setFound(true);
-      socket.emit("send_message", { message: "found waldo" });
+    const img = new Image();
+    img.src = "/assets/1.jpg";
+  
+    img.onload = () => {
+
+      const renderedWidth = Math.min(window.innerWidth, img.width);
+      const renderedHeight = img.height * (window.innerWidth / img.width);
+
+      // console.log(renderedWidth, renderedHeight);
+
+      const x = (event.clientX / renderedWidth) * 100;
+      const y = (event.clientY / renderedHeight) * 100;
+
+      // console.log(x, y);
+
+      const waldo_x = waldo.coords[0].x;
+      const waldo_y = waldo.coords[0].y;
+
+      // console.log(waldo_x, waldo_y);
+
+      if (Math.abs(x - Number(waldo_x)) < threshold && Math.abs(y - Number(waldo_y)) < threshold) {
+        console.log("You found Waldo!");
+      } else {
+        console.log("Try again!");
+      }
     }
   }
-
+  
   return (
     <div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <img src="/assets/Waldo.jpeg" alt="Waldo" onClick={handleClick} />
-      <Input
-        type="email"
-        placeholder="Email"
-        onChange={(e: any) => setMsg(e.target.value)}
-      />
-      <Button onClick={sendMessage}>Sumbit</Button>
+      <img src="/assets/1.jpg" alt="Waldo" onClick={handleClick} />
     </div>
   );
 }
