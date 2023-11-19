@@ -27,3 +27,7 @@ io.on("connection", (socket) => {
 server.listen(3001, () => {
   console.log("SERVER IS RUNNING");
 });
+
+app.get('/getRoom', (req, res) => {
+  res.send('69')
+})

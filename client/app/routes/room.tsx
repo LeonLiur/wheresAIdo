@@ -3,6 +3,11 @@ import * as io from "socket.io-client";
 
 const socket = io.connect("http://localhost:3001/");
 
+async function getRoom() {
+  let result = await fetch("http://localhost:3001/getRoom");
+  console.log(await result.json());
+}
+
 export default function Room() {
   const sendMessage = () => {
     console.log(1);
@@ -12,7 +17,7 @@ export default function Room() {
   return (
     <div className="p-4 flex gap-4">
       <Button>Join Room</Button>
-      <Button>Start Room</Button>
+      <Button onClick={getRoom}>Start Room</Button>
     </div>
   );
 }

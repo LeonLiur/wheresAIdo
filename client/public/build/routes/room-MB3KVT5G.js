@@ -1,13 +1,13 @@
 import {
   Button,
   lookup
-} from "/build/_shared/chunk-L3Z4JAQH.js";
+} from "/build/_shared/chunk-4B7OYGOX.js";
 import {
   require_jsx_dev_runtime
 } from "/build/_shared/chunk-XU7DNSPJ.js";
 import {
   createHotContext
-} from "/build/_shared/chunk-U6TTRABJ.js";
+} from "/build/_shared/chunk-THDIDIAX.js";
 import "/build/_shared/chunk-UWV35TSL.js";
 import "/build/_shared/chunk-BOXFZXVX.js";
 import {
@@ -33,9 +33,13 @@ if (import.meta) {
     //@ts-expect-error
     "app/routes/room.tsx"
   );
-  import.meta.hot.lastModified = "1700361292877.2314";
+  import.meta.hot.lastModified = "1700362855014.4585";
 }
 var socket = lookup("http://localhost:3001/");
+async function getRoom() {
+  let result = await fetch("http://localhost:3001/getRoom");
+  console.log(await result.json());
+}
 function Room() {
   const sendMessage = () => {
     console.log(1);
@@ -44,17 +48,17 @@ function Room() {
   return /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", { className: "p-4 flex gap-4", children: [
     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Button, { children: "Join Room" }, void 0, false, {
       fileName: "app/routes/room.tsx",
-      lineNumber: 30,
+      lineNumber: 34,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Button, { children: "Start Room" }, void 0, false, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Button, { onClick: getRoom, children: "Start Room" }, void 0, false, {
       fileName: "app/routes/room.tsx",
-      lineNumber: 31,
+      lineNumber: 35,
       columnNumber: 7
     }, this)
   ] }, void 0, true, {
     fileName: "app/routes/room.tsx",
-    lineNumber: 29,
+    lineNumber: 33,
     columnNumber: 10
   }, this);
 }
@@ -66,4 +70,4 @@ window.$RefreshSig$ = prevRefreshSig;
 export {
   Room as default
 };
-//# sourceMappingURL=/build/routes/room-XYL7G4LC.js.map
+//# sourceMappingURL=/build/routes/room-MB3KVT5G.js.map
