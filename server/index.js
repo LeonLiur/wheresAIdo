@@ -31,17 +31,17 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log(`User Connected: ${socket.id}`);
+  // console.log(`User Connected: ${socket.id}`);
   
-  socket.broadcast.emit("user_joined", socket.id)
-
   socket.on("send_message", (data) => {
     // socket.to(data.room).emit("receive_message", data)
     socket.to("11").emit("receive_message", data)
   });
 
-  socket.on("join_room", (roomNum) => {
-    socket.join(roomNum);
+  socket.on("join_room", (message) => {
+    console.log(message)
+    socket.to(message.roomNum).emit("user_joined", {name: message.name, uid: message.uid, score: message.score})
+    socket.join(message.roomNum);
   })
 
 });
@@ -70,27 +70,31 @@ app.get('/generate_waldo', async (req, res) => {
 server.listen(3001, () => {
 });
 
-app.post('/createRoom', async(req, res) => {
-
+app.post('/createRoom', (req, res) => {
 
   let roomNum = db.ref(`roomNumbers`)
   let roomsInUse = []
   let roomNumber = 11
   roomNum.get().then((snapshot) => {
     roomsInUse = snapshot.val()
-    roomNumber = roomsInUse[roomsInUse.length - 1] + 1
+    if (roomsInUse == null){
+      roomNumber = 0
+      roomsInUse = []
+    }
+    else{
+      roomNumber = roomsInUse[roomsInUse.length - 1] + 1
+    }
 
     let roomRef = db.ref(`rooms/${roomNumber}`)
     roomRef.set({
-      roomNumber,
+      roomNumber: roomNumber.toString(),
+      host: req.body.uid,
       players: {
         [req.body.uid]: {
-          name: "",
-          score: ""
+          name: req.body.name,
+          score: 0
         }
       }
-
-      
     })
 
     roomNum.update([...roomsInUse, roomNumber])
@@ -98,5 +102,45 @@ app.post('/createRoom', async(req, res) => {
     res.send(JSON.stringify(roomNumber))
 
   })
+
+})
+
+app.post("/joinRoom", async(req, res) => {
+  let roomNum = db.ref(`roomNumbers`)
+  const roomNumbers = (await roomNum.get()).val()
+  if (req.body.roomNum in roomNumbers){
+    let roomRef = db.ref(`rooms/${req.body.roomNum}/players`)
+
+    let users = (await roomRef.get()).val()
+
+    let userRef = db.ref(`rooms/${req.body.roomNum}/players/${req.body.uid}`)
+
+
+    await userRef.set({ 
+      [req.body.uid]:{
+        "name": req.body.name,
+        score: 0
+      }
+    })
+
+    // let ids = Object.keys(users)
+    // let values = Object.values(users)
+    // let ret = []
+    // for (let i = 0; i < ids.length; i++){
+    //   ret.push({
+    //     id: ids[i],
+    //     name: values[i].name,
+    //     score: values[i].score
+    //   })
+    // }
+
+    res.send(JSON.stringify(users))
+
+
+  }
+  else{
+
+    res.status(200).send("No room number")
+  }
 
 })

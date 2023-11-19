@@ -5,27 +5,40 @@ import { Button } from "~/@/components/ui/button";
 import { Input } from "~/@/components/ui/input";
 import config from "../../public/config.json";
 import { getAuth, onAuthStateChanged, signInAnonymously } from "firebase/auth";
+import Header from "~/@/components/header";
 
 const color = ["red", "blue", "green", "purple"];
 
 const socket = io.connect(config.SERVER_URL);
 
-export function Players() {
-  const [users, setUsers] = useState<Array<string>>([]);
-  socket.on("user_joined", (data: any) => {
-    setUsers([...users, data]);
-  });
+export function Players(props: { users: object }) {
+  const [users, setUsers] = useState<any>(props.users);
+  socket.on(
+    "user_joined",
+    (data: { uid: string; roomNum: string; name: string; score: number }) => {
+      let temp = { ...users };
+      temp[data.uid] = { name: data.name, score: data.score };
+      setUsers(temp);
+    }
+  );
 
   return (
     <div className="flex gap-4">
-      {users.map((user, key) => {
-        return (
-          <div
-            className={`w-24 h-24 rounded-full bg-${color[key]}-600`}
-            key={key}
-          ></div>
-        );
-      })}
+      {users &&
+        Object.keys(users).map((id: any, idx: number) => {
+          let value = users[id];
+          return (
+            <div key={id} className="flex gap-2 items-center">
+              <div className="text-right">
+                <p>{value.name}</p>
+                <p>{idx}</p>
+              </div>
+              <div
+                className={`w-24 h-24 rounded-full bg-${color[idx]}-600`}
+              ></div>
+            </div>
+          );
+        })}
     </div>
   );
 }
@@ -38,10 +51,12 @@ enum Actions {
 
 export default function Room() {
   // Messages States
-  const [message, setMessage] = useState("");
   const [room, setRoom] = useState("");
   const [messageReceived, setMessageReceived] = useState("");
   const [action, setAction] = useState<Actions>(Actions.NONE);
+  const [name, setName] = useState("");
+  const [joined, setJoined] = useState(false);
+  const [players, setPlayers] = useState<object>({});
   const auth = getAuth();
 
   useEffect(() => {
@@ -57,8 +72,6 @@ export default function Room() {
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
       console.log(auth.currentUser?.uid);
       // ...
     } else {
@@ -67,13 +80,33 @@ export default function Room() {
     }
   });
 
-  const joinRoom = (room_id: string) => {
-    setRoom(room_id);
-    socket.emit("join_room", room_id);
-  };
+  const joinRoom = async () => {
+    const roomExists = await (
+      await fetch(`${config.SERVER_URL}/joinRoom`, {
+        method: "POST",
+        body: JSON.stringify({
+          roomNum: room,
+          name: name,
+          uid: auth.currentUser?.uid,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+    ).json();
 
-  const sendMessage = () => {
-    socket.emit("send_message", { message, room });
+    if (roomExists == "No room number") {
+      //no room found
+    } else {
+      socket.emit("join_room", {
+        roomNum: room,
+        name,
+        uid: auth.currentUser?.uid,
+        score: 0,
+      });
+      setJoined(true);
+      setPlayers(roomExists);
+    }
   };
 
   useEffect(() => {
@@ -84,32 +117,49 @@ export default function Room() {
 
   async function createRoom() {
     setAction(Actions.CREATE);
-    const getRoom = await (
+    let getRoom = await (
       await fetch(`${config.SERVER_URL}/createRoom`, {
         method: "POST",
         body: JSON.stringify({
           uid: auth.currentUser?.uid,
+          name: name,
         }),
         headers: {
           "Content-Type": "application/json",
         },
       })
     ).json();
+    getRoom = getRoom.toString();
     setRoom(getRoom);
+
+    socket.emit("join_room", {
+      roomNum: getRoom,
+      name,
+      uid: auth.currentUser?.uid,
+      score: 0,
+    });
+    setJoined(true);
   }
 
   return (
     <div className="p-4 flex gap-4 flex-col">
+      <Header />
       <div className="flex gap-4">
+        <Input
+          placeholder="Username"
+          onChange={(e: any) => setName(e.target.value)}
+        ></Input>
         <Button
           onClick={() => setAction(Actions.JOIN)}
           variant={action == Actions.CREATE ? "secondary" : "default"}
+          disabled={name == ""}
         >
           Join Room
         </Button>
         <Button
           onClick={createRoom}
           variant={action == Actions.JOIN ? "secondary" : "default"}
+          disabled={name == ""}
         >
           Start Room
         </Button>
@@ -121,17 +171,19 @@ export default function Room() {
       {action == Actions.JOIN ? (
         <div className="flex gap-4">
           <Input
-            onChange={(e: any) => setMessage(e.target.value)}
+            onChange={(e: any) => setRoom(e.target.value)}
             placeholder="Room Number"
           ></Input>
-          <Button>Join</Button>
+          <Button onClick={joinRoom}>Join</Button>
         </div>
       ) : action == Actions.CREATE ? (
-        <div>
-          <h1>Join Room: {room}</h1>
+        <div className="gap-4">
+          <h1>Share your room with friends: {room}</h1>
+          <Button>Start Game!</Button>
         </div>
       ) : null}
-      <Players />
+      <p className="text-lg font-semibold">Players</p>
+      {joined ? <Players users={players} /> : null}
     </div>
   );
 }
