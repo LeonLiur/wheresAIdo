@@ -77,7 +77,7 @@ export default function Index() {
         alt="new_waldo"
         style={{
           position: "absolute",
-          top: (waldo.coords[pic_id].y)/1,
+          top: (waldo.coords[pic_id].y),
           left: waldo.coords[pic_id].x,
           width: "10%", // Adjust the size as needed
           height: "10%", // Adjust the size as needed

@@ -4,4 +4,4 @@ node_modules
 /client/build/
 **/public/build/
 .env
-.DS_Store
+**/build
