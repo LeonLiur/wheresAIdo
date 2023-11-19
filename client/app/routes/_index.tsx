@@ -36,7 +36,7 @@ export default function Index() {
   return (
     <div>
       <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <img src="/Waldo.jpeg" alt="Waldo" onClick={handleClick} />
+      <img src="/assets/Waldo.jpeg" alt="Waldo" onClick={handleClick} />
       <Input
         type="email"
         placeholder="Email"

@@ -6105,7 +6105,7 @@ if (import.meta) {
     //@ts-expect-error
     "app/routes/_index.tsx"
   );
-  import.meta.hot.lastModified = "1700358404675.625";
+  import.meta.hot.lastModified = "1700358541969.5398";
 }
 var socket = lookup2("http://localhost:3001/");
 var meta = () => {
@@ -6141,7 +6141,7 @@ function Index() {
       lineNumber: 55,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("img", { src: "/Waldo.jpeg", alt: "Waldo", onClick: handleClick }, void 0, false, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("img", { src: "/assets/Waldo.jpeg", alt: "Waldo", onClick: handleClick }, void 0, false, {
       fileName: "app/routes/_index.tsx",
       lineNumber: 56,
       columnNumber: 7
@@ -6172,4 +6172,4 @@ export {
   Index as default,
   meta
 };
-//# sourceMappingURL=/build/routes/_index-OZLHU2M7.js.map
+//# sourceMappingURL=/build/routes/_index-2F4JRDK5.js.map

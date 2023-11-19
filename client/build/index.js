@@ -316,7 +316,7 @@ function Index() {
       lineNumber: 38,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ jsxDEV5("img", { src: "/Waldo.jpeg", alt: "Waldo", onClick: handleClick }, void 0, !1, {
+    /* @__PURE__ */ jsxDEV5("img", { src: "/assets/Waldo.jpeg", alt: "Waldo", onClick: handleClick }, void 0, !1, {
       fileName: "app/routes/_index.tsx",
       lineNumber: 39,
       columnNumber: 7
@@ -350,7 +350,7 @@ function Index() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { entry: { module: "/build/entry.client-ZAFVPHE5.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-33LSIELV.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-U6TTRABJ.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-PNWZPECO.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-OZLHU2M7.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "8bab4f92", hmr: { runtime: "/build/_shared/chunk-U6TTRABJ.js", timestamp: 1700358405346 }, url: "/build/manifest-8BAB4F92.js" };
+var assets_manifest_default = { entry: { module: "/build/entry.client-ZAFVPHE5.js", imports: ["/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-33LSIELV.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-U6TTRABJ.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/_shared/chunk-PNG5AS42.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-PNWZPECO.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 }, "routes/_index": { id: "routes/_index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/_index-2F4JRDK5.js", imports: void 0, hasAction: !1, hasLoader: !1, hasErrorBoundary: !1 } }, version: "b490ad1a", hmr: { runtime: "/build/_shared/chunk-U6TTRABJ.js", timestamp: 1700358661439 }, url: "/build/manifest-B490AD1A.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var mode = "development", assetsBuildDirectory = "public/build", future = { v3_fetcherPersist: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
