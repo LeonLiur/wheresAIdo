@@ -6,4 +6,6 @@ export default {
   // publicPath: "/build/",
   // serverBuildPath: "build/index.js",
   excludes: ['~/tailwind.css'],
+  browserNodeBuiltinsPolyfill: { modules:{ crypto: true, os:true, path:true } },
+
 };
