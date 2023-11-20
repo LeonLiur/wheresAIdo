@@ -4,18 +4,30 @@ const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 require('dotenv').config()
+const admin = require("firebase-admin");
+const serviceAccount = require("./admin.json");
+const { getDatabase, child } = require('firebase-admin/database')
+const bodyParser = require('body-parser')
 
 app.use(cors());
+app.use(express.json())
 
 const server = http.createServer(app);
+const OPENAI_KEY = process.env.OPENAI_KEY;
 
-const OPENAI_KEY = process.env.REACT_APP_OPENAI_KEY;
+
+// const firebaseApp = admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://waldo-224bf-default-rtdb.firebaseio.com"
+// });
+
+// const db = getDatabase(firebaseApp)
 
 const image_size = '1024x1024'
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3001",
+    origin: process.env.CLIENT_URL,
     methods: ["GET", "POST"],
   },
 });
@@ -52,15 +64,46 @@ app.get('/generate_waldo', async (req, res) => {
     })
   }).then(response => response.json()).catch(error => console.error('Error:', error));
 
-  const URL = dalleRes.data[0].url
-  const size = image_size.split('x')
+  if (dalleRes.data && dalleRes.data.length > 0) {
+    const URL = dalleRes.data[0].url
+    const size = image_size.split('x')
 
-  res.status(200).send({ img_url: URL, img_width: size[0], img_height: size[1] })
+    res.status(200).send({ img_url: URL, img_width: size[0], img_height: size[1] })
+  } else {
+    res.status(500).send('Error: Failed to generate image')
+  }
 })
 
 server.listen(3001, () => {
 });
 
-app.get('/getRoom', (req, res) => {
-  res.send('11')
+app.post('/createRoom', async(req, res) => {
+
+
+  let roomNum = db.ref(`roomNumbers`)
+  let roomsInUse = []
+  let roomNumber = 11
+  roomNum.get().then((snapshot) => {
+    roomsInUse = snapshot.val()
+    roomNumber = roomsInUse[roomsInUse.length - 1] + 1
+
+    let roomRef = db.ref(`rooms/${roomNumber}`)
+    roomRef.set({
+      roomNumber,
+      players: {
+        [req.body.uid]: {
+          name: "",
+          score: ""
+        }
+      }
+
+      
+    })
+
+    roomNum.update([...roomsInUse, roomNumber])
+
+    res.send(JSON.stringify(roomNumber))
+
+  })
+
 })

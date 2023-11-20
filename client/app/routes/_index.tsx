@@ -95,7 +95,7 @@ export default function Index() {
           Math.abs(x - waldo_x * 100) < threshold &&
           Math.abs(y - waldo_y * 100) < threshold
         ) {
-          console.log("You found Waldo!");
+          alert("You found Waldo!");
           socket.emit("send_message", { message: "found waldo" });
           setFound(false);
         } else {
