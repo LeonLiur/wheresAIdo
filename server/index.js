@@ -32,8 +32,8 @@ const io = new Server(server, {
   },
 });
 
-io.on("connection", (socket) => {
-  // console.log(`User Connected: ${socket.id}`);
+io.on("connection", async(socket) => {
+  console.log(`User Connected: ${socket.id}`);
   
   socket.on("start_game", room => {
     console.log("start")
@@ -65,7 +65,10 @@ io.on("connection", (socket) => {
 
   socket.on("display_image", async(room) => {
     let prompts = await getPrompts(room)
-    socket.to(room.toString()).emit("images", {prompts})
+    console.log(prompts)
+    socket.broadcast.emit("send_images", prompts)
+    // socket.to(room.toString()).emit("send_images", prompts)
+    // socket.to(room.toString()).emit("images", {prompts})
   })
 
 });
