@@ -34,6 +34,7 @@ export default function Index() {
   const [time, setTime] = useState(59);
   const [intervalID, setIntervalID] = useState<any>(null);
   const [room, setRoom] = useState("");
+
   const auth = getAuth();
 
   const param: any = useParams();
@@ -41,7 +42,7 @@ export default function Index() {
   useEffect(() => {
     setRoom(param.room);
 
-    socket.emit("display_image", param.room);
+    socket.emit("display_image", param.room.toString());
 
     // async function getPrompts() {
     //   const prompts = fetch("getPrompts", {
@@ -79,22 +80,29 @@ export default function Index() {
   }, [time]);
 
   useEffect(() => {
-    console.log(1);
     socket.on("receive_message", (data: any) => {
       alert(data.message);
     });
 
+    socket.on("reset_game", () => {
+      alert("Game Over");
+    });
+
     socket.on(
-      "images",
+      "send_images",
       (
         prompts: [{ img_url: string; img_width: number; img_height: number }]
       ) => {
-        console.log("images received");
+        console.log(prompts[0]);
         setImageWidth(Math.min(window.innerWidth, prompts[0].img_width));
         setImageHeight(
           prompts[0].img_height * (window.innerWidth / prompts[0].img_height)
         );
         setImgUrl(prompts[0].img_url);
+        const rand_x = 0.3;
+        const rand_y = 0.8;
+        setWaldoX(rand_x);
+        setWaldoY(rand_y);
       }
     );
   }, [socket]);
@@ -141,10 +149,10 @@ export default function Index() {
     // console.log(`img width ${Math.min(window.innerWidth, res.img_width)}, img height ${res.img_height * (window.innerWidth / res.img_width)}`)
     setImageWidth(Math.min(window.innerWidth, res.img_width));
     setImageHeight(res.img_height * (window.innerWidth / res.img_width));
-    const rand_x = 0.1 + Math.random() * 0.8;
-    const rand_y = 0.1 + Math.random() * 0.7;
-    // const rand_x = 0.5
-    // const rand_y = 0.5
+    // const rand_x = 0.1 + Math.random() * 0.8;
+    // const rand_y = 0.1 + Math.random() * 0.7;
+    const rand_x = 0.5;
+    const rand_y = 0.5;
     setWaldoX(rand_x);
     setWaldoY(rand_y);
     console.log(`waldo x ${rand_x}, waldo y ${rand_y}`);
@@ -183,22 +191,24 @@ export default function Index() {
 
   return (
     <div>
-      <h3>00:{time}</h3>
       <img
         src={imgUrl ? imgUrl : ""}
         onClick={imgUrl ? handleClick : () => {}}
       />
-      <img
-        src={imgUrl ? new_waldo : ""}
-        style={{
-          position: "absolute",
-          top: waldo_y * imgHeight - waldoImageHeight / 2,
-          left: waldo_x * imgWidth - waldoImageWidth / 2,
-          width: `${waldoImageWidth}px`, // Adjust the size as needed
-          height: `${waldoImageHeight}px`, // Adjust the size as needed
-          pointerEvents: "none", // Allow clicks to pass through the overlay
-        }}
-      />
+      {imgUrl && (
+        <img
+          src={imgUrl ? new_waldo : ""}
+          style={{
+            position: "absolute",
+            top: waldo_y * imgHeight,
+            left: waldo_x * imgWidth,
+            width: `${waldoImageWidth}px`, // Adjust the size as needed
+            height: `${waldoImageHeight}px`, // Adjust the size as needed
+            pointerEvents: "none", // Allow clicks to pass through the overlay
+          }}
+        />
+      )}
+      <h3>00:{time}</h3>
       {/* <Input type="text" value={text} onChange={handleChange} /> */}
       {/* <Button onClick={handleSubmit}>Submit</Button> */}
       {/* <p>Typed Text: {submittedText}</p> */}
